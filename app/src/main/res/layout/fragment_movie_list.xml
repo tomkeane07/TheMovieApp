@@ -16,7 +16,7 @@
     <androidx.appcompat.widget.AppCompatAutoCompleteTextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="movie list">
+        android:text="@{viewModel.response}">
     </androidx.appcompat.widget.AppCompatAutoCompleteTextView>
 
 
