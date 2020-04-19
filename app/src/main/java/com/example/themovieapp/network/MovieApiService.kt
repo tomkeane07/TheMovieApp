@@ -1,18 +1,25 @@
 package com.example.themovieapp.network
 
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Call
 import retrofit2.Retrofit
-import retrofit2.converter.scalars.ScalarsConverterFactory
+import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 
 private const val BASE_URL = "https://api.themoviedb.org/3/"
 private const val API_key  = "42a09a435ec64d8fa772179fcb739f91"
 
+private val moshi = Moshi.Builder()
+    .add(KotlinJsonAdapterFactory())
+    .build()
+
 private val retrofit = Retrofit.Builder()
-    .addConverterFactory(ScalarsConverterFactory.create())
+    .addConverterFactory(MoshiConverterFactory.create(moshi))
     .baseUrl(BASE_URL)
     .build()
+
 
 interface MovieApiService{
 //https://developers.themoviedb.org/3/movies/get-top-rated-movies
@@ -22,7 +29,7 @@ interface MovieApiService{
         @Query("api_key") apiKey: String = API_key,
         @Query("language") language: String = "en-US",
         @Query("page") page: Int
-    ): Call<String>
+    ): Call<ResponseObject>
 }
 
 

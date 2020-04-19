@@ -10,6 +10,7 @@
         name="viewModel"
         type="com.example.themovieapp.search.MovieListViewModel" />
 </data>
+
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -18,8 +19,6 @@
         android:layout_height="match_parent"
         android:text="@{viewModel.response}">
     </androidx.appcompat.widget.AppCompatAutoCompleteTextView>
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
