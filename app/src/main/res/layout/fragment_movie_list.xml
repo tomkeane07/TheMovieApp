@@ -9,16 +9,33 @@
     <variable
         name="viewModel"
         type="com.example.themovieapp.search.MovieListViewModel" />
+
+    <variable
+        name="Movie"
+        type="com.example.themovieapp.network.Movie"
+            />
 </data>
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@{viewModel.response}">
-    </androidx.appcompat.widget.AppCompatAutoCompleteTextView>
+        android:layout_height="wrap_content"
+        tools:context="com.example.themovieapp.search.MovieListFragment">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/chapter_name"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:layout_marginEnd="@dimen/spacing_normal"
+            android:gravity="center_vertical"
+            android:text="@{Movie.title}"
+            android:textAppearance="?textAppearanceHeadline6"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
