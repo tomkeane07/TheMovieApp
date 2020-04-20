@@ -21,6 +21,11 @@ class MovieListViewModel: ViewModel() {
     val response: LiveData<String>
         get() = _response
 
+    private val _movie = MutableLiveData<Movie>()
+
+    val movie: LiveData<Movie>
+        get() = _movie
+
 
     // allows easy update of the value of the MutableLiveData
     private var viewModelJob = Job()
@@ -39,10 +44,14 @@ class MovieListViewModel: ViewModel() {
         coroutineScope.launch{
             var getMoviePropertiesDeferred = MovieApi.retrofitService.getMovies(page = 1)
             try {
+
                 var responseObject = getMoviePropertiesDeferred.await()
-                _response.value = "Success: ${responseObject.results.size} Mars properties retrieved"
+                if(responseObject.results.size > 0 ){
+                    _movie.value = responseObject.results[0]
+                }
                 Log.d("res", "success")
             } catch (e: Exception) {
+
                 _response.value = "Failure: ${e.message}"
                 Log.d("res", "fail")
             }

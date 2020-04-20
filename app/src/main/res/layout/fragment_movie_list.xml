@@ -24,23 +24,27 @@
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="18dp"
-            android:layout_height="20dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:contentDescription="TODO"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/movie_title"
-            app:srcCompat="@drawable/logo"
-            android:contentDescription="TODO" />
+             />
 
         <TextView
             android:id="@+id/movie_title"
             android:layout_width="0dp"
-            android:layout_height="19dp"
+            android:layout_height="50dp"
+            android:foregroundGravity="center_vertical"
             android:gravity="center_vertical"
-            android:text="@{viewModel.response}"
+            android:text="@{viewModel.movie.title}"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:layout_marginStart="5dp"
+            android:layout_marginBottom="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/imageView"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
