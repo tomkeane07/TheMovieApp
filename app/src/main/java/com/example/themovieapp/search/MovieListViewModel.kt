@@ -21,6 +21,10 @@ class MovieListViewModel: ViewModel() {
     val response: LiveData<String>
         get() = _response
 
+    private val _movieList = MutableLiveData<List<Movie>>()
+    private val movieList: LiveData<List<Movie>>
+        get() = _movieList
+
     private val _movie = MutableLiveData<Movie>()
 
     val movie: LiveData<Movie>
@@ -47,7 +51,8 @@ class MovieListViewModel: ViewModel() {
 
                 var responseObject = getMoviePropertiesDeferred.await()
                 if(responseObject.results.size > 0 ){
-                    _movie.value = responseObject.results[0]
+                    //_movie.value = responseObject.results[0]
+                    _movieList.value = responseObject.results
                 }
                 Log.d("res", "success")
             } catch (e: Exception) {

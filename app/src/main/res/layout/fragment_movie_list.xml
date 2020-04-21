@@ -1,50 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+
+
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-<data>
+    <data>
 
-    <variable
-        name="viewModel"
-        type="com.example.themovieapp.search.MovieListViewModel" />
-
-    <variable
-        name="Movie"
-        type="com.example.themovieapp.network.Movie"
-            />
-</data>
+        <variable
+            name="viewModel"
+            type="com.example.themovieapp.search.MovieListViewModel" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:context="com.example.themovieapp.search.MovieListFragment">
+        android:layout_height="match_parent"
+        tools:context="com.example.themovieapp.MainActivity">
 
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:contentDescription="TODO"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/gdg_chapter_list"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/movie_title"
-             />
+            app:listData="@{viewModel.movieList}"
+            tools:listitem="@layout/movie_list_item" />
 
         <TextView
-            android:id="@+id/movie_title"
             android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:foregroundGravity="center_vertical"
-            android:gravity="center_vertical"
-            android:text="@{viewModel.movie.title}"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:layout_marginStart="5dp"
-            android:layout_marginBottom="5dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:text="@string/waiting_for_location_and_network"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            />
+            app:showOnlyWhenEmpty="@{viewModel.response}"
+            tools:visibility="gone" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
