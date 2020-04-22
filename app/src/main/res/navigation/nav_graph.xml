@@ -12,6 +12,6 @@
     <fragment
         android:id="@+id/movie_search"
         android:name="com.example.themovieapp.search.MovieListFragment"
-        android:label="GDG Search"/>
+        android:label="movie Search"/>
 
 </navigation>
