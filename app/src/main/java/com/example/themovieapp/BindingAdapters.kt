@@ -1,5 +1,6 @@
 package com.example.themovieapp
 
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import androidx.core.net.toUri
@@ -12,11 +13,12 @@ import com.example.themovieapp.search.MovieListAdapter
 
 
 /**
- * When there is no Mars property data (data is null), hide the [RecyclerView], otherwise show it.
+ * When there is no Movie data (data is null), hide the [RecyclerView], otherwise show it.
  */
 @BindingAdapter("listData")
     fun bindRecyclerView(recyclerView: RecyclerView, data: List<Movie>?) {
         val adapter = recyclerView.adapter as MovieListAdapter
+        Log.d("listData binding","${data}")
         adapter.submitList(data)
 }
 
@@ -43,18 +45,4 @@ fun View.showOnlyWhenEmpty(data: List<Movie>?) {
         data == null || data.isEmpty() -> View.VISIBLE
         else -> View.GONE
     }
-
-
-
-/*    imgUrl?.let{
-        val imgUri = imgUrl.toUri().buildUpon().scheme("https").build()
-
-        Glide.with(imgView.context)
-            .load(imgUri)
-            .apply(
-                RequestOptions()
-                .placeholder(R.drawable.loading_animation)
-                .error(R.drawable.ic_broken_image))
-            .into(imgView)
-    }*/
 }
