@@ -16,49 +16,48 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class MovieListViewModel: ViewModel() {
-    private val _response = MutableLiveData<String>()
-
-    val response: LiveData<String>
-        get() = _response
 
     private val _movieList = MutableLiveData<List<Movie>>()
-    private val movieList: LiveData<List<Movie>>
+
+    val movieList: LiveData<List<Movie>>
         get() = _movieList
 
-    private val _movie = MutableLiveData<Movie>()
+
+/*    private val _movie = MutableLiveData<Movie>()
 
     val movie: LiveData<Movie>
-        get() = _movie
-
+        get() = _movie*/
+    
 
     // allows easy update of the value of the MutableLiveData
     private var viewModelJob = Job()
+
+    // the Coroutine runs using the Main (UI) dispatcher
     private val coroutineScope = CoroutineScope(
         viewModelJob + Dispatchers.Main )
 
 
     init{
         Log.d("list", "in init")
-        getMovieProperties()
+        getMovies()
     }
 
 
-    private fun getMovieProperties() {
+    private fun getMovies() {
 
         coroutineScope.launch{
-            var getMoviePropertiesDeferred = MovieApi.retrofitService.getMovies(page = 1)
+            var getMoviesDeferred = MovieApi.retrofitService.getMovies(page = 1)
             try {
 
-                var responseObject = getMoviePropertiesDeferred.await()
+                var responseObject = getMoviesDeferred.await()
                 if(responseObject.results.size > 0 ){
                     //_movie.value = responseObject.results[0]
                     _movieList.value = responseObject.results
                 }
-                Log.d("res", "success")
+                Log.d("getMovies", "success: ${responseObject.results.size} movies found")
             } catch (e: Exception) {
-
-                _response.value = "Failure: ${e.message}"
-                Log.d("res", "fail")
+                _movieList.value = ArrayList()
+                Log.d("getMovies", "failed to get Movies ${e.message}")
             }
         }
     }

@@ -20,7 +20,7 @@
 
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/gdg_chapter_list"
+            android:id="@+id/movie_list"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="8dp"
@@ -34,18 +34,7 @@
             app:listData="@{viewModel.movieList}"
             tools:listitem="@layout/movie_list_item" />
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:gravity="center"
-            android:text="@string/waiting_for_location_and_network"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:showOnlyWhenEmpty="@{viewModel.response}"
-            tools:visibility="gone" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
