@@ -4,6 +4,10 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.themovieapp.databinding.MovieListItemBinding
+import com.example.themovieapp.databinding.MovieListItemBindingImpl
 import com.example.themovieapp.network.Movie
 import com.example.themovieapp.network.MovieApi
 import com.example.themovieapp.network.ResponseObject
@@ -39,22 +43,28 @@ class MovieListViewModel: ViewModel() {
 
     init{
         Log.d("list", "in init")
-        getMovies()
+        for(i in 1..3 ){
+            getMovies(i)
+        }
     }
 
 
-    private fun getMovies() {
+    private fun getMovies(pageNumber: Int) {
 
         coroutineScope.launch{
-            var getMoviesDeferred = MovieApi.retrofitService.getMovies(page = 1)
+            var getMoviesDeferred = MovieApi.retrofitService.getMovies(page = pageNumber)
             try {
 
                 var responseObject = getMoviesDeferred.await()
                 if(responseObject.results.size > 0 ){
                     //_movie.value = responseObject.results[0]
-                    _movieList.value = responseObject.results
+                    if(_movieList.value!=null){
+                        val x: List<Movie> = movieList.value!!.toList()
+                        _movieList.value =  x.plus(responseObject.results)
+                    }
+                    else{_movieList.value = responseObject.results}
                 }
-                Log.d("getMovies", "success: ${responseObject.results.size} movies found")
+                Log.d("getMovies", "success: ${movieList.value!!.size} movies found")
             } catch (e: Exception) {
                 _movieList.value = ArrayList()
                 Log.d("getMovies", "failed to get Movies ${e.message}")
