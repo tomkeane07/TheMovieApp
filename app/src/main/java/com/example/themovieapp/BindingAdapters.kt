@@ -24,9 +24,13 @@ import com.example.themovieapp.search.MovieListAdapter
 
 
 @BindingAdapter("imageUrl")
-fun bindImage(imgView: ImageView, imgUrl: String?) {
-    imgUrl?.let {
-        val imgUri = imgUrl.toUri().buildUpon().scheme("https").build()
+fun bindImage(imgView: ImageView, posterPath: String?) {
+    val imgUrl = "image.tmdb.org/t/p/w500" + posterPath
+    imgUrl.let {
+
+        val imgUri = imgUrl.toUri()
+            .buildUpon().scheme("https").build()
+        Log.d("imgUri",imgUri.toString())
         Glide.with(imgView.context)
             .load(imgUri)
             .apply(

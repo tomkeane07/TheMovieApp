@@ -16,5 +16,5 @@ data class Movie(
     val id: String,
     val title: String,
     val popularity: Double,
-    @Json(name = "img_src") val poster_path: String?
+    @Json(name = "poster_path") val poster_path: String?
 )
