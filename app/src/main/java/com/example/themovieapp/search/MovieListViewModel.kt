@@ -23,10 +23,10 @@ class MovieListViewModel: ViewModel() {
         get() = _movieList
 
 
-/*    private val _movie = MutableLiveData<Movie>()
+    private val _movie = MutableLiveData<Movie>()
 
     val movie: LiveData<Movie>
-        get() = _movie*/
+        get() = _movie
     
 
     // allows easy update of the value of the MutableLiveData

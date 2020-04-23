@@ -74,10 +74,6 @@ class MovieListAdapter() :
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):
             MovieListViewHolder {
-        return MovieListViewHolder(
-            MovieListItemBinding.inflate(
-                LayoutInflater.from(parent.context)
-            )
-        )
+        return MovieListViewHolder.from(parent)
     }
 }

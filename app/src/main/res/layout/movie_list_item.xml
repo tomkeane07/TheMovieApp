@@ -10,16 +10,22 @@
         <variable
             name="movie"
             type="com.example.themovieapp.network.Movie" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_height="match_parent"
-        android:layout_width="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context="com.example.themovieapp.search.MovieListFragment">
+
 
         <ImageView
             android:id="@+id/movie_poster"
             android:layout_width="70dp"
             android:layout_height="70dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="26dp"
+            android:layout_marginBottom="26dp"
             android:contentDescription="@string/todo"
             app:imageUrl="@{movie.poster_path}"
             app:layout_constraintBottom_toBottomOf="parent"
