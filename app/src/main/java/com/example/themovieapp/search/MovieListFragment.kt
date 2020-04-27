@@ -1,11 +1,14 @@
 package com.example.themovieapp.search;
 
 import android.os.Bundle
-import android.view.*
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-
-import androidx.lifecycle.ViewModelProviders;
-import com.example.themovieapp.R
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.themovieapp.databinding.FragmentMovieListBinding
 
 
@@ -29,9 +32,12 @@ class MovieListFragment : Fragment() {
 
         binding.movieList.adapter = MovieListAdapter()
 
+
         setHasOptionsMenu(true)
         return binding.root
     }
+
+
 
 
 
@@ -41,4 +47,16 @@ class MovieListFragment : Fragment() {
         inflater.inflate(R.menu.overflow_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }*/
+
+
+//        fun RecyclerView.onScrollToEnd(linearLayoutManager: LinearLayoutManager, onScrollNearEnd: (Unit) -> Unit)
+//            = addOnScrollListener(object : RecyclerView.OnScrollListener() {
+//        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+//            if (linearLayoutManager.childCount + linearLayoutManager.findFirstVisibleItemPosition()
+//                >= linearLayoutManager.itemCount - 5) {  //if near fifth item from end
+//                onScrollNearEnd(Unit)
+//                Log.d("scroll Listener","near end")
+//            }
+//        }
+//    })
 }

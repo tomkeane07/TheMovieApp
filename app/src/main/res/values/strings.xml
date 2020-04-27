@@ -3,4 +3,5 @@
     <string name="seeMoviesButton">look up movies</string>
     <string name="todo">TODO</string>
     <string name="waiting_for_location_and_network">Waiting for location and network result.\n\n If running on an         emulator open the Maps app to enable location services.</string>
+    <string name="load_more_movies">Load more movies</string>
 </resources>

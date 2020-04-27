@@ -1,8 +1,10 @@
 package com.example.themovieapp.search
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.themovieapp.databinding.MovieListItemBinding
@@ -15,7 +17,6 @@ import com.example.themovieapp.network.Movie
  */
 class MovieListAdapter() :
     ListAdapter<Movie, MovieListAdapter.MovieListViewHolder>(DiffCallback) {
-
 
     /**
      * Allows the RecyclerView to determine which items have changed when the [List]
@@ -76,4 +77,7 @@ class MovieListAdapter() :
             MovieListViewHolder {
         return MovieListViewHolder.from(parent)
     }
+
+
+
 }

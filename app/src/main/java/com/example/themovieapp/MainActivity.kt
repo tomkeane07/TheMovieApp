@@ -8,7 +8,10 @@ import androidx.navigation.ui.NavigationUI.navigateUp
 import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.themovieapp.databinding.ActivityMainBinding
+import kotlinx.android.synthetic.main.fragment_movie_list.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,7 +31,8 @@ class MainActivity : AppCompatActivity() {
      *
      * Delegate this to Navigation.
      */
-    override fun onSupportNavigateUp() = navigateUp(findNavController(R.id.nav_host_fragment), binding.drawerLayout)
+    override fun onSupportNavigateUp() =
+        navigateUp(findNavController(R.id.nav_host_fragment), binding.drawerLayout)
 
     /**
      * Setup Navigation for this Activity

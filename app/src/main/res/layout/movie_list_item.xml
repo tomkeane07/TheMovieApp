@@ -21,8 +21,8 @@
 
         <ImageView
             android:id="@+id/movie_poster"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="50dp"
+            android:layout_height="75dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="26dp"
             android:layout_marginBottom="26dp"
@@ -36,7 +36,7 @@
 
         <TextView
             android:id="@+id/movie_title"
-            android:layout_width="0dp"
+            android:layout_width="240dp"
             android:layout_height="0dp"
             android:layout_marginStart="@dimen/spacing_normal"
             android:layout_marginEnd="@dimen/spacing_normal"
@@ -44,10 +44,20 @@
             android:gravity="center_horizontal|center_vertical"
             android:text="@{movie.title}"
             app:layout_constraintBottom_toBottomOf="@+id/movie_poster"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/movie_poster"
             app:layout_constraintTop_toTopOf="@+id/movie_poster"
             app:layout_constraintVertical_chainStyle="packed"
             tools:text="sample Text" />
+
+        <TextView
+            android:id="@+id/movie_vote_average"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:shape="oval"
+            app:averageRating="@{movie.vote_average}"
+            app:layout_constraintBottom_toBottomOf="@+id/movie_poster"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/movie_title"
+            app:layout_constraintTop_toTopOf="@+id/movie_poster" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

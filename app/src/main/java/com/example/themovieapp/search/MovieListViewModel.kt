@@ -4,34 +4,22 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.themovieapp.databinding.MovieListItemBinding
-import com.example.themovieapp.databinding.MovieListItemBindingImpl
 import com.example.themovieapp.network.Movie
 import com.example.themovieapp.network.MovieApi
-import com.example.themovieapp.network.ResponseObject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class MovieListViewModel: ViewModel() {
+
+    private var pageCount = 1
 
     private val _movieList = MutableLiveData<List<Movie>>()
 
     val movieList: LiveData<List<Movie>>
         get() = _movieList
 
-
-    private val _movie = MutableLiveData<Movie>()
-
-    val movie: LiveData<Movie>
-        get() = _movie
-    
 
     // allows easy update of the value of the MutableLiveData
     private var viewModelJob = Job()
@@ -43,24 +31,23 @@ class MovieListViewModel: ViewModel() {
 
     init{
         Log.d("list", "in init")
-        for(i in 1..3 ){
-            getMovies(i)
-        }
+            pageCount = getMovies(pageCount)
     }
 
 
-    private fun getMovies(pageNumber: Int) {
+    private fun getMovies(pageNumber: Int): Int {
 
         coroutineScope.launch{
-            var getMoviesDeferred = MovieApi.retrofitService.getMovies(page = pageNumber)
+            val getMoviesDeferred = MovieApi.retrofitService.getMovies(page = pageNumber)
             try {
 
-                var responseObject = getMoviesDeferred.await()
+                val responseObject = getMoviesDeferred.await()
                 if(responseObject.results.size > 0 ){
                     //_movie.value = responseObject.results[0]
                     if(_movieList.value!=null){
-                        val x: List<Movie> = movieList.value!!.toList()
-                        _movieList.value =  x.plus(responseObject.results)
+                        val unsortedList: List<Movie> = movieList.value!!.toList()
+                        _movieList.value =  unsortedList.plus(responseObject.results).sortedByDescending { it.vote_average }
+
                     }
                     else{_movieList.value = responseObject.results}
                 }
@@ -69,7 +56,14 @@ class MovieListViewModel: ViewModel() {
                 _movieList.value = ArrayList()
                 Log.d("getMovies", "failed to get Movies ${e.message}")
             }
+
         }
+        return pageNumber.inc()
+    }
+
+
+    fun onLoadMoreMoviesClicked(){
+        pageCount = getMovies(pageCount)
     }
 
 
