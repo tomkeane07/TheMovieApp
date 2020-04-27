@@ -1,13 +1,12 @@
 package com.example.themovieapp
 
-import android.graphics.Color
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
-import androidx.databinding.adapters.TextViewBindingAdapter.setText
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -52,21 +51,24 @@ fun bindratingBackground(textView: TextView, avgRating: Double?) {
         when {
             avgRating >= 5 && avgRating < 6.5 ->
                 textView.setBackgroundColor(
-                    Color.parseColor("#ffd6a5")
+                    ContextCompat.getColor(
+                        textView.context , R.color.ColorRatingMediumLow)
                 )
             avgRating >= 6.5 && avgRating < 8 ->
                 textView.setBackgroundColor(
-                    Color.parseColor("#fdffb6")
+                    ContextCompat.getColor(
+                        textView.context , R.color.ColorRatingMediumHigh)
                 )
             avgRating >= 8 ->
                 textView.setBackgroundColor(
-                    Color.parseColor("#caffbf")
+                    ContextCompat.getColor(
+                        textView.context , R.color.ColorRatingHigh)
                 )
             else ->
                 textView.setBackgroundColor(
-                    Color.parseColor("#ffadad")
+                    ContextCompat.getColor(
+                        textView.context , R.color.ColorRatingLow)
                 )
-
 
         }
     }
