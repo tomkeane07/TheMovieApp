@@ -4,8 +4,8 @@
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
 
-    <color name="ColorRatingHigh">#caffbf</color>
-    <color name="ColorRatingMediumHigh">#fdffb6</color>
-    <color name="ColorRatingMediumLow">#ffd6a5</color>
-    <color name="ColorRatingLow">#ffadad</color>
+    <color name="ColorRatingHigh">#99caffbf</color>
+    <color name="ColorRatingMediumHigh">#99fdffb6</color>
+    <color name="ColorRatingMediumLow">#99ffd6a5</color>
+    <color name="ColorRatingLow">#99ffadad</color>
 </resources>

@@ -1,10 +1,14 @@
 package com.example.themovieapp
 
+import android.graphics.drawable.shapes.Shape
+import android.os.Build
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toDrawable
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -44,32 +48,33 @@ fun bindImage(imgView: ImageView, posterPath: String?) {
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 @BindingAdapter("averageRating")
 fun bindratingBackground(textView: TextView, avgRating: Double?) {
     textView.setText(avgRating.toString())
     if (avgRating != null) {
+        textView.setBackgroundResource(R.drawable.rounded_view_with_border)
         when {
             avgRating >= 5 && avgRating < 6.5 ->
-                textView.setBackgroundColor(
+                textView.background.mutate().setTint(
                     ContextCompat.getColor(
                         textView.context , R.color.ColorRatingMediumLow)
                 )
             avgRating >= 6.5 && avgRating < 8 ->
-                textView.setBackgroundColor(
+                textView.background.mutate().setTint(
                     ContextCompat.getColor(
                         textView.context , R.color.ColorRatingMediumHigh)
                 )
             avgRating >= 8 ->
-                textView.setBackgroundColor(
+                textView.background.mutate().setTint(
                     ContextCompat.getColor(
                         textView.context , R.color.ColorRatingHigh)
                 )
             else ->
-                textView.setBackgroundColor(
+                textView.background.mutate().setTint(
                     ContextCompat.getColor(
                         textView.context , R.color.ColorRatingLow)
                 )
-
         }
     }
 

@@ -51,13 +51,14 @@
 
         <TextView
             android:id="@+id/movie_vote_average"
-            android:layout_width="20dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:shape="oval"
+            android:gravity="center_horizontal|center_vertical"
             app:averageRating="@{movie.vote_average}"
             app:layout_constraintBottom_toBottomOf="@+id/movie_poster"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/movie_title"
-            app:layout_constraintTop_toTopOf="@+id/movie_poster" />
+            app:layout_constraintTop_toTopOf="@+id/movie_poster"
+            tools:text="8.0"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
