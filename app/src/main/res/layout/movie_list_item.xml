@@ -8,6 +8,10 @@
     <data>
 
         <variable
+            name="clickListener"
+            type="com.example.themovieapp.search.MovieClickListener" />
+
+        <variable
             name="movie"
             type="com.example.themovieapp.network.Movie" />
 
@@ -16,6 +20,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="@{() -> clickListener.onClick(movie)}"
         tools:context="com.example.themovieapp.search.MovieListFragment">
 
 

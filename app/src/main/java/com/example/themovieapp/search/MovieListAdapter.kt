@@ -1,10 +1,8 @@
 package com.example.themovieapp.search
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.themovieapp.databinding.MovieListItemBinding
@@ -15,7 +13,7 @@ import com.example.themovieapp.network.Movie
  * This class implements a [RecyclerView] [ListAdapter] which uses Data Binding to present [List]
  * data, including computing diffs between lists.
  */
-class MovieListAdapter() :
+class MovieListAdapter(val clickListener: MovieClickListener) :
     ListAdapter<Movie, MovieListAdapter.MovieListViewHolder>(DiffCallback) {
 
     /**
@@ -45,7 +43,9 @@ class MovieListAdapter() :
     ) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(movie: Movie) {
+        fun bind(clickListener: MovieClickListener, movie: Movie) {
+
+            binding.clickListener = clickListener
             binding.movie = movie
             // This is important, because it forces the data binding to execute immediately,
             // which allows the RecyclerView to make the correct view size measurements
@@ -63,11 +63,13 @@ class MovieListAdapter() :
 
 
     override fun onBindViewHolder(
-        holder: MovieListAdapter.MovieListViewHolder, position: Int
-    ) {
+        holder: MovieListViewHolder, position: Int) {
 
         val movie = getItem(position)
-        holder.bind(movie)
+        holder.itemView.setOnClickListener{
+            clickListener.onClick(movie)
+        }
+        holder.bind(clickListener, movie)
     }
 
     /**
@@ -78,6 +80,8 @@ class MovieListAdapter() :
         return MovieListViewHolder.from(parent)
     }
 
+}
 
-
+class MovieClickListener(val clickListener: (movie: Movie) -> Unit) {
+    fun onClick(movie: Movie) = clickListener(movie)
 }

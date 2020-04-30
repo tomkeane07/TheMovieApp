@@ -1,6 +1,5 @@
 package com.example.themovieapp
 
-import android.graphics.drawable.shapes.Shape
 import android.os.Build
 import android.util.Log
 import android.view.View
@@ -8,7 +7,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.toDrawable
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
