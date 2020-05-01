@@ -11,14 +11,21 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
+enum class MovieApiStatus { LOADING, ERROR, DONE }
+
 class MovieListViewModel: ViewModel() {
 
     private var pageCount = 1
 
     private val _movieList = MutableLiveData<List<Movie>>()
+    val status: LiveData<MovieApiStatus>
+        get() = _status
 
     val movieList: LiveData<List<Movie>>
         get() = _movieList
+
+
+    private val _status = MutableLiveData<MovieApiStatus>()
 
 
     // LiveData to handle navigation to the selected movie
@@ -47,8 +54,9 @@ class MovieListViewModel: ViewModel() {
         coroutineScope.launch{
             val getMoviesDeferred = MovieApi.retrofitService.getMovies(page = pageNumber)
             try {
-
+                _status.value = MovieApiStatus.LOADING
                 val responseObject = getMoviesDeferred.await()
+                _status.value = MovieApiStatus.DONE
                 if(responseObject.results.size > 0 ){
                     //_movie.value = responseObject.results[0]
                     if(_movieList.value!=null){
@@ -60,6 +68,7 @@ class MovieListViewModel: ViewModel() {
                 }
                 Log.d("getMovies", "success: ${movieList.value!!.size} movies found")
             } catch (e: Exception) {
+                _status.value = MovieApiStatus.ERROR
                 _movieList.value = ArrayList()
                 Log.d("getMovies", "failed to get Movies ${e.message}")
             }

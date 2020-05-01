@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.themovieapp.network.Movie
+import com.example.themovieapp.search.MovieApiStatus
 import com.example.themovieapp.search.MovieListAdapter
 
 
@@ -78,6 +79,24 @@ fun bindratingBackground(textView: TextView, avgRating: Double?) {
 
 }
 
+@BindingAdapter("movieApiStatus")
+fun bindStatus(statusImageView: ImageView,
+               status: MovieApiStatus?) {
+    when (status) {
+        MovieApiStatus.LOADING -> {
+            statusImageView.visibility = View.VISIBLE
+            statusImageView.setImageResource(R.drawable.loading_animation)
+        }
+        MovieApiStatus.ERROR -> {
+            statusImageView.visibility = View.VISIBLE
+            statusImageView.setImageResource(R.drawable.ic_connection_error)
+        }
+        MovieApiStatus.DONE -> {
+            statusImageView.visibility = View.GONE
+        }
+    }
+
+}
 
 @BindingAdapter("showOnlyWhenEmpty")
 fun View.showOnlyWhenEmpty(data: List<Movie>?) {
