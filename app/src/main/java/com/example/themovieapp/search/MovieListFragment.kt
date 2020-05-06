@@ -19,7 +19,6 @@ class MovieListFragment : Fragment() {
         ViewModelProviders.of(this).get(MovieListViewModel::class.java)
     }
 
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val binding = FragmentMovieListBinding.inflate(inflater)
@@ -51,22 +50,10 @@ class MovieListFragment : Fragment() {
             }
         })
 
-
-
         setHasOptionsMenu(true)
         return binding.root
     }
 
-
-
-
-
-//      Inflates the overflow menu that contains filtering options.
-
-/*    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.overflow_menu, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }*/
 
 
 //        fun RecyclerView.onScrollToEnd(linearLayoutManager: LinearLayoutManager, onScrollNearEnd: (Unit) -> Unit)

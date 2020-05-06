@@ -18,6 +18,9 @@ class HomeFragment : Fragment() {
     }
 
     private lateinit var viewModel: HomeViewModel
+    fun getViewModel(): HomeViewModel {
+        return viewModel
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,6 +30,8 @@ class HomeFragment : Fragment() {
         viewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
         binding.viewModel = viewModel
 
+
+        //Observes change in LiveData, then performs navigation
         viewModel.navigateToSearch.observe(viewLifecycleOwner,
             Observer<Boolean> { navigate->
                 if(navigate) {

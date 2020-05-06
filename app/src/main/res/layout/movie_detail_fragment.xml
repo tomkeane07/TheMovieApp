@@ -20,7 +20,7 @@
             android:padding="16dp">
 
             <ImageView
-                android:id="@+id/poster"
+                android:id="@+id/movie_poster"
                 android:layout_width="100sp"
                 android:layout_height="150sp"
                 android:contentDescription="TODO"
@@ -32,13 +32,61 @@
                 tools:src="@tools:sample/backgrounds/scenic" />
 
             <TextView
-                android:id="@+id/overview"
+                android:id="@+id/movie_release_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10sp"
+                android:gravity="center_horizontal"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/movie_poster"
+                app:layout_constraintEnd_toStartOf="@+id/movie_poster"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/movie_poster"
+                app:layout_constraintVertical_bias="0.50"
+                app:text="@{viewModel.selectedMovie.release_date}"
+                tools:text="2019-09-02" />
+
+            <TextView
+                android:id="@+id/movie_vote_average"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal|center_vertical"
+                android:textSize="30sp"
+                app:averageRating="@{viewModel.selectedMovie.vote_average}"
+                app:layout_constraintBottom_toBottomOf="@+id/movie_poster"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/movie_poster"
+                app:layout_constraintTop_toTopOf="@+id/movie_poster"
+                tools:text="8.0" />
+
+            <TextView
+                android:id="@+id/movie_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@{viewModel.selectedMovie.overview}"
-                app:layout_constraintTop_toBottomOf="@id/poster"
+                android:layout_marginStart="10sp"
+                android:layout_marginEnd="10sp"
+                android:gravity="center_horizontal"
+                android:outlineProvider="none"
+                android:singleLine="false"
+                android:text="@{viewModel.selectedMovie.title}"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintTop_toBottomOf="@id/movie_poster"
+                tools:text="Seven Samurai" />
+
+            <TextView
+                android:id="@+id/movie_overview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:outlineProvider="paddedBounds"
+                android:text="@{viewModel.selectedMovie.overview}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/movie_title"
+                tools:text="the best film ever. the best film ever. the best film ever. the best film ever. the best film ever. the best film ever. the best film ever. the best film ever. the best film ever. the best film ever. the best film ever. the best film ever. the best film ever. the best film ever. the best film ever. the best film ever. the best film ever. the best film ever. the best film ever. the best film ever. the best film ever. the best film ever. the best film ever. the best film ever. " />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

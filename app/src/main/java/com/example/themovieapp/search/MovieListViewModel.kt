@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.themovieapp.network.Movie
 import com.example.themovieapp.network.MovieApi
 import kotlinx.coroutines.CoroutineScope
@@ -13,9 +14,9 @@ import kotlinx.coroutines.launch
 
 enum class MovieApiStatus { LOADING, ERROR, DONE }
 
-class MovieListViewModel: ViewModel() {
+class MovieListViewModel : ViewModel() {
 
-    private var pageCount = 1
+    var pageCount = 1
 
     private val _movieList = MutableLiveData<List<Movie>>()
     val status: LiveData<MovieApiStatus>
@@ -34,37 +35,38 @@ class MovieListViewModel: ViewModel() {
         get() = _navigateToSelectedMovie
 
 
-
     // allows easy update of the value of the MutableLiveData
     private var viewModelJob = Job()
 
     // the Coroutine runs using the Main (UI) dispatcher
     private val coroutineScope = CoroutineScope(
-        viewModelJob + Dispatchers.Main )
+        viewModelJob + Dispatchers.Main
+    )
 
 
-    init{
+    init {
         Log.d("list", "in init")
-            pageCount = getMovies(pageCount)
+        getMovies(pageCount)
     }
 
 
-    private fun getMovies(pageNumber: Int): Int {
+    fun getMovies(pageNumber: Int) {
 
-        coroutineScope.launch{
+        coroutineScope.launch {
             val getMoviesDeferred = MovieApi.retrofitService.getMovies(page = pageNumber)
             try {
                 _status.value = MovieApiStatus.LOADING
                 val responseObject = getMoviesDeferred.await()
                 _status.value = MovieApiStatus.DONE
-                if(responseObject.results.size > 0 ){
-                    //_movie.value = responseObject.results[0]
-                    if(_movieList.value!=null){
+                if (responseObject.results.size > 0) {
+                    if (_movieList.value != null) {
                         val unsortedList: List<Movie> = movieList.value!!.toList()
-                        _movieList.value =  unsortedList.plus(responseObject.results).sortedByDescending { it.vote_average }
+                        _movieList.value = unsortedList.plus(responseObject.results)
+                            .sortedByDescending { it.vote_average }
 
+                    } else {
+                        _movieList.value = responseObject.results
                     }
-                    else{_movieList.value = responseObject.results}
                 }
                 Log.d("getMovies", "success: ${movieList.value!!.size} movies found")
             } catch (e: Exception) {
@@ -72,16 +74,14 @@ class MovieListViewModel: ViewModel() {
                 _movieList.value = ArrayList()
                 Log.d("getMovies", "failed to get Movies ${e.message}")
             }
-
         }
-        return pageNumber.inc()
+        pageCount = pageNumber.inc()
     }
 
 
-    fun onLoadMoreMoviesClicked(){
-        pageCount = getMovies(pageCount)
+    fun onLoadMoreMoviesClicked() {
+        getMovies(pageCount)
     }
-
 
 
     /**
@@ -99,9 +99,6 @@ class MovieListViewModel: ViewModel() {
     fun displayMovieDetailsComplete() {
         _navigateToSelectedMovie.value = null
     }
-
-
-
 
 
     override fun onCleared() {

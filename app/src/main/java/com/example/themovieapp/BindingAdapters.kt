@@ -15,6 +15,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.themovieapp.network.Movie
 import com.example.themovieapp.search.MovieApiStatus
 import com.example.themovieapp.search.MovieListAdapter
+import com.example.themovieapp.search.MovieListViewModel
 
 
 /**
@@ -23,7 +24,7 @@ import com.example.themovieapp.search.MovieListAdapter
 @BindingAdapter("listData")
 fun bindRecyclerView(recyclerView: RecyclerView, data: List<Movie>?) {
     val adapter = recyclerView.adapter as MovieListAdapter
-    Log.d("listData binding", "${data}")
+    //Log.d("listData binding", "${data}")
     adapter.submitList(data)
 }
 
@@ -35,7 +36,7 @@ fun bindImage(imgView: ImageView, posterPath: String?) {
 
         val imgUri = imgUrl.toUri()
             .buildUpon().scheme("https").build()
-        Log.d("imgUri", imgUri.toString())
+        //Log.d("imgUri", imgUri.toString())
         Glide.with(imgView.context)
             .load(imgUri)
             .apply(
@@ -54,25 +55,29 @@ fun bindratingBackground(textView: TextView, avgRating: Double?) {
     if (avgRating != null) {
         textView.setBackgroundResource(R.drawable.rounded_view_with_border)
         when {
-            avgRating >= 5 && avgRating < 6.5 ->
+            5 <= avgRating && avgRating < 6.5 ->
                 textView.background.mutate().setTint(
                     ContextCompat.getColor(
-                        textView.context , R.color.ColorRatingMediumLow)
+                        textView.context, R.color.ColorRatingMediumLow
+                    )
                 )
-            avgRating >= 6.5 && avgRating < 8 ->
+            6.5 <= avgRating && avgRating < 8 ->
                 textView.background.mutate().setTint(
                     ContextCompat.getColor(
-                        textView.context , R.color.ColorRatingMediumHigh)
+                        textView.context, R.color.ColorRatingMediumHigh
+                    )
                 )
-            avgRating >= 8 ->
+            8 <= avgRating ->
                 textView.background.mutate().setTint(
                     ContextCompat.getColor(
-                        textView.context , R.color.ColorRatingHigh)
+                        textView.context, R.color.ColorRatingHigh
+                    )
                 )
             else ->
                 textView.background.mutate().setTint(
                     ContextCompat.getColor(
-                        textView.context , R.color.ColorRatingLow)
+                        textView.context, R.color.ColorRatingLow
+                    )
                 )
         }
     }
@@ -80,8 +85,10 @@ fun bindratingBackground(textView: TextView, avgRating: Double?) {
 }
 
 @BindingAdapter("movieApiStatus")
-fun bindStatus(statusImageView: ImageView,
-               status: MovieApiStatus?) {
+fun bindStatus(
+    statusImageView: ImageView,
+    status: MovieApiStatus?
+) {
     when (status) {
         MovieApiStatus.LOADING -> {
             statusImageView.visibility = View.VISIBLE
