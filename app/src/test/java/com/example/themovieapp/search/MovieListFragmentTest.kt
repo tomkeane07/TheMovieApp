@@ -11,7 +11,8 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.themovieapp.CustomRecyclerViewTestUtil.Companion.withItemCount
 import com.example.themovieapp.R
-import org.awaitility.Awaitility.await
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -19,7 +20,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import java.lang.Thread.sleep
 import java.util.concurrent.Callable
-import java.util.concurrent.TimeUnit
 
 
 @RunWith(AndroidJUnit4::class)
@@ -31,7 +31,7 @@ open class MovieListFragmentTest {
 
     @Before
     fun setUp() {
-        scenario = launchFragmentInContainer<MovieListFragment>()
+        GlobalScope.launch{scenario = launchFragmentInContainer<MovieListFragment>()}
     }
 
     @After

@@ -27,7 +27,7 @@ interface MovieApiService{
 //https://developers.themoviedb.org/3/movies/get-top-rated-movies
 //https://square.github.io/retrofit/2.x/retrofit/index.html?retrofit2/http/Query.html
     @GET("movie/top_rated")
-    fun getMovies(
+    fun getMoviesAsync(
         @Query("api_key") apiKey: String = API_key,
         @Query("language") language: String = "en-US",
         @Query("page") page: Int

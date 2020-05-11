@@ -1,6 +1,5 @@
 package com.example.themovieapp.search;
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,19 +7,35 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.example.themovieapp.R
+import com.example.themovieapp.LifecycleManagedCoroutineScope
 import com.example.themovieapp.databinding.FragmentMovieListBinding
 
 
 class MovieListFragment : Fragment() {
 
-    private val viewModel: MovieListViewModel by lazy {
+/*    private val viewModel: MovieListViewModel by lazy {
         ViewModelProviders.of(this).get(MovieListViewModel::class.java)
-    }
+    }*/
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+
+        val viewModel = ViewModelProviders.of(
+            this,
+            MovieListViewModelFactory(
+                LifecycleManagedCoroutineScope(
+                    lifecycleScope,
+                    lifecycleScope.coroutineContext
+                )
+            )
+        ).get(MovieListViewModel::class.java)
+
         val binding = FragmentMovieListBinding.inflate(inflater)
 
         //val binding = GridViewItemBinding.inflate(inflater)
@@ -40,11 +55,12 @@ class MovieListFragment : Fragment() {
         // After navigating, call displayPropertyDetailsComplete() so that the ViewModel is ready
         // for another navigation event.
         viewModel.navigateToSelectedMovie.observe(viewLifecycleOwner, Observer {
-            if ( null != it ) {
+            if (null != it) {
                 // Must find the NavController from the Fragment
                 this.findNavController().navigate(
                     MovieListFragmentDirections
-                        .actionMovieListFragmentToMovieDetailFragment(it))
+                        .actionMovieListFragmentToMovieDetailFragment(it)
+                )
                 // Tell the ViewModel we've made the navigate call to prevent multiple navigation
                 viewModel.displayMovieDetailsComplete()
             }
@@ -53,7 +69,6 @@ class MovieListFragment : Fragment() {
         setHasOptionsMenu(true)
         return binding.root
     }
-
 
 
 //        fun RecyclerView.onScrollToEnd(linearLayoutManager: LinearLayoutManager, onScrollNearEnd: (Unit) -> Unit)

@@ -1,45 +1,74 @@
 package com.example.themovieapp.search
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.example.themovieapp.ManagedCoroutineScope
+import com.example.themovieapp.TestScope
 import com.example.themovieapp.getOrAwaitValue
-import org.junit.Test
-
-import org.junit.Assert.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.setMain
+import org.junit.After
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
+import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.junit.MockitoJUnitRunner
 
 
-@RunWith(AndroidJUnit4::class)
+@ExperimentalCoroutinesApi
+@RunWith(MockitoJUnitRunner::class)
 class MovieListViewModelTest {
 
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()
 
+    private val testDispatcher = TestCoroutineDispatcher()
+    private val managedCoroutineScope: ManagedCoroutineScope = TestScope(testDispatcher)
     lateinit var viewModel: MovieListViewModel
 
+
     @Before
-    fun setupViewModel(){
-        viewModel = MovieListViewModel()
+    fun setup() {
+        Dispatchers.setMain(testDispatcher)
+        viewModel = MovieListViewModel(managedCoroutineScope)
+
     }
 
-    @Test
-    fun onLoadMoreMoviesClickedTest() {
-        val pageCount = viewModel.pageCount
-
-        viewModel.onLoadMoreMoviesClicked()
-        assertTrue("'load more movies' page incrementation",
-            viewModel.pageCount==pageCount.inc())
+    @After
+    fun tearDown() {
+        Dispatchers.resetMain()
+        testDispatcher.cleanupTestCoroutines()
     }
 
-    //pretty useless test tbh..
+    @ExperimentalCoroutinesApi
     @Test
-    fun getMoviesTest(){
-        viewModel.getMovies(viewModel.pageCount)
+    fun getMoviesTest() {
+        managedCoroutineScope.launch {
+            assertTrue(
+                "initial List, API status: ${viewModel.status.getOrAwaitValue()}",
+                viewModel.status.getOrAwaitValue() == MovieApiStatus.DONE
+            )
+            assertTrue(
+                "movieList has ${viewModel.movieList.value?.size}, != 20",
+                viewModel.movieList.value?.size == 20
+            )
+            assertTrue(
+                "pageCount = ${viewModel.pageCount}, != 2",
+                viewModel.pageCount == 2
+            )
+            viewModel.onLoadMoreMoviesClicked()
+            assertTrue(
+                "added to list, API status: ${viewModel.status.getOrAwaitValue()}",
+                viewModel.status.getOrAwaitValue() == MovieApiStatus.DONE
+            )
+            assertTrue(
+                "movieList has ${viewModel.movieList.value?.size}, != 40",
+                viewModel.movieList.value?.size == 40
+            )
 
-        assertTrue("${viewModel.status.getOrAwaitValue()}",
-            viewModel.status.getOrAwaitValue()==MovieApiStatus.LOADING||
-                    viewModel.status.getOrAwaitValue()==MovieApiStatus.DONE)
+        }
     }
 }

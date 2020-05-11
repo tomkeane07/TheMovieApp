@@ -1,21 +1,16 @@
 package com.example.themovieapp.search
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import com.example.themovieapp.ManagedCoroutineScope
 import com.example.themovieapp.network.Movie
 import com.example.themovieapp.network.MovieApi
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.cancel
 
 enum class MovieApiStatus { LOADING, ERROR, DONE }
 
-class MovieListViewModel : ViewModel() {
-
+class MovieListViewModel(val coroutineScope: ManagedCoroutineScope) : ViewModel() {
     var pageCount = 1
 
     private val _movieList = MutableLiveData<List<Movie>>()
@@ -35,53 +30,35 @@ class MovieListViewModel : ViewModel() {
         get() = _navigateToSelectedMovie
 
 
-    // allows easy update of the value of the MutableLiveData
-    private var viewModelJob = Job()
-
-    // the Coroutine runs using the Main (UI) dispatcher
-    private val coroutineScope = CoroutineScope(
-        viewModelJob + Dispatchers.Main
-    )
-
-
     init {
-        Log.d("list", "in init")
         getMovies(pageCount)
     }
 
 
-    fun getMovies(pageNumber: Int) {
+    fun getMovies(pageNumber: Int) =
 
-        coroutineScope.launch {
-            val getMoviesDeferred = MovieApi.retrofitService.getMovies(page = pageNumber)
+        coroutineScope.launch{
+            val getMoviesDeferred =
+                MovieApi.retrofitService.getMoviesAsync(page = pageNumber)
             try {
                 _status.value = MovieApiStatus.LOADING
                 val responseObject = getMoviesDeferred.await()
                 _status.value = MovieApiStatus.DONE
-                if (responseObject.results.size > 0) {
-                    if (_movieList.value != null) {
-                        val unsortedList: List<Movie> = movieList.value!!.toList()
-                        _movieList.value = unsortedList.plus(responseObject.results)
-                            .sortedByDescending { it.vote_average }
-
-                    } else {
-                        _movieList.value = responseObject.results
-                    }
+                if (_movieList.value == null) {
+                    _movieList.value = ArrayList()
                 }
-                Log.d("getMovies", "success: ${movieList.value!!.size} movies found")
+                pageCount = pageNumber.inc()
+                _movieList.value = movieList.value!!.toList().plus(responseObject.results)
+                    .sortedByDescending { it.vote_average }
             } catch (e: Exception) {
                 _status.value = MovieApiStatus.ERROR
                 _movieList.value = ArrayList()
-                Log.d("getMovies", "failed to get Movies ${e.message}")
             }
         }
-        pageCount = pageNumber.inc()
-    }
 
 
-    fun onLoadMoreMoviesClicked() {
+    fun onLoadMoreMoviesClicked() =
         getMovies(pageCount)
-    }
 
 
     /**
@@ -103,6 +80,6 @@ class MovieListViewModel : ViewModel() {
 
     override fun onCleared() {
         super.onCleared()
-        viewModelJob.cancel()
+        coroutineScope.cancel()
     }
 }
