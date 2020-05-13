@@ -1,27 +1,48 @@
 package com.example.themovieapp.search
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.core.view.get
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.ViewAssertion
 import androidx.test.espresso.action.ViewActions
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions
+import androidx.test.espresso.contrib.RecyclerViewActions
+import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.themovieapp.CustomRecyclerViewTestUtil.Companion.withItemCount
+import com.example.themovieapp.ManagedCoroutineScope
 import com.example.themovieapp.R
+import com.example.themovieapp.TestScope
+import com.example.themovieapp.network.Movie
+import kotlinx.android.synthetic.main.fragment_movie_list.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.test.resetMain
+import org.apache.tools.ant.types.Assertions
+import org.apache.tools.ant.types.Resource
+import org.hamcrest.MatcherAssert.assertThat
 import org.junit.After
+import org.junit.Assert.assertThat
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.Mockito
 import java.lang.Thread.sleep
 import java.util.concurrent.Callable
 
 
+@ExperimentalCoroutinesApi
 @RunWith(AndroidJUnit4::class)
 open class MovieListFragmentTest {
 
@@ -29,64 +50,55 @@ open class MovieListFragmentTest {
     var instantExecutorRule = InstantTaskExecutorRule()
     lateinit var scenario: FragmentScenario<MovieListFragment>
 
+    private val testDispatcher = TestCoroutineDispatcher()
+    private val managedCoroutineScope: ManagedCoroutineScope = TestScope(testDispatcher)
+
     @Before
     fun setUp() {
-        GlobalScope.launch{scenario = launchFragmentInContainer<MovieListFragment>()}
+        managedCoroutineScope.launch { scenario = launchFragmentInContainer<MovieListFragment>() }
     }
 
     @After
-    fun final() {
-        scenario.onFragment { fragment ->
-            println(
-                fragment.activity?.findViewById<RecyclerView>(
-                    R.id.movie_list
-                )?.adapter?.itemCount!!
-            )
-        }
+    fun tearDown() {
+        Dispatchers.resetMain()
+        testDispatcher.cleanupTestCoroutines()
     }
 
     @Test
     fun recyclerViewCountTest() {
-        sleep(5000)
-        onView(withId(R.id.movie_list))
-            .check(ViewAssertions.matches(withItemCount(20)))
-        //simulate button press
-        onView(withId(R.id.load_more_button)).perform(ViewActions.click())
-        //test btn
+        managedCoroutineScope.launch {
+            onView(withId(R.id.movie_list))
+                .check(ViewAssertions.matches(withItemCount(20)))
 
-/*        sleep(5000)
-
-        scenario.onFragment { fragment ->
-
-            await().atMost(30, TimeUnit.SECONDS).until(
-                listResponse(
-                    fragment.activity
-                        ?.findViewById<RecyclerView>(R.id.movie_list)
-                        ?.adapter?.itemCount!!,
-                    40
-                )
-            )
-    }*/
-    }
-
-
-//TODO - some nav tests
-
-
-    open fun listResponse(
-        //https://stackoverflow.com/questions/36556854/robolectric-and-retrofit-wait-for-response
-        actualCount: Int,
-        expectedCount: Int
-    ): Callable<Boolean?>? {
-        println("actualCount: $actualCount")
-        return Callable {
-            actualCount.equals(expectedCount)
+//            simulate button press and test again
+            onView(withId(R.id.load_more_button)).perform(ViewActions.click())
+                .check(ViewAssertions.matches((withItemCount(40))))
         }
     }
+
+    @Test
+    fun navToMovieDetailTest() {
+        managedCoroutineScope.launch {
+            val mockNavController = Mockito.mock(NavController::class.java)
+            scenario.onFragment { fragment ->
+                Navigation.setViewNavController(fragment.requireView(), mockNavController)
+            }
+
+
+            onView(withId(R.id.movie_list))
+                .perform(
+                    RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                        1, click()
+                    )
+                )
+            scenario.onFragment { fragment ->
+                Mockito.verify(mockNavController)
+                    .navigate(
+                        MovieListFragmentDirections
+                            .actionMovieListFragmentToMovieDetailFragment(fragment.selectedMovie)
+                    )
+            }
+        }
+    }
+    //TODO - some nav-back tests
 }
-
-
-/*
-*   Using sleep() as a hamfisted way to wait for API
-* response. may implement await funct in future,
-* such as idling resource    */

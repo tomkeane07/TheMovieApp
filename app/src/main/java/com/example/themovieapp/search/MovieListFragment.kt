@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.themovieapp.LifecycleManagedCoroutineScope
 import com.example.themovieapp.databinding.FragmentMovieListBinding
+import com.example.themovieapp.network.Movie
 
 
 class MovieListFragment : Fragment() {
@@ -19,7 +20,8 @@ class MovieListFragment : Fragment() {
         ViewModelProviders.of(this).get(MovieListViewModel::class.java)
     }*/
 
-
+    //using this var for fragmentTesting purposes
+    lateinit var selectedMovie: Movie
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,6 +38,8 @@ class MovieListFragment : Fragment() {
             )
         ).get(MovieListViewModel::class.java)
 
+
+
         val binding = FragmentMovieListBinding.inflate(inflater)
 
         //val binding = GridViewItemBinding.inflate(inflater)
@@ -49,6 +53,7 @@ class MovieListFragment : Fragment() {
         // tells the viewModel when our movie is clicked
         binding.movieList.adapter = MovieListAdapter(MovieClickListener { movie ->
             viewModel.displayMovieDetails(movie)
+            selectedMovie = movie
         })
 
         // Observe the navigateToSelectedProperty LiveData and Navigate when it isn't null
@@ -69,16 +74,4 @@ class MovieListFragment : Fragment() {
         setHasOptionsMenu(true)
         return binding.root
     }
-
-
-//        fun RecyclerView.onScrollToEnd(linearLayoutManager: LinearLayoutManager, onScrollNearEnd: (Unit) -> Unit)
-//            = addOnScrollListener(object : RecyclerView.OnScrollListener() {
-//        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-//            if (linearLayoutManager.childCount + linearLayoutManager.findFirstVisibleItemPosition()
-//                >= linearLayoutManager.itemCount - 5) {  //if near fifth item from end
-//                onScrollNearEnd(Unit)
-//                Log.d("scroll Listener","near end")
-//            }
-//        }
-//    })
 }

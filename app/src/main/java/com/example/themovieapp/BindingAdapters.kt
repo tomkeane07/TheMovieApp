@@ -1,7 +1,9 @@
 package com.example.themovieapp
 
+import android.graphics.Color
+import android.graphics.drawable.Drawable
+import android.graphics.drawable.GradientDrawable
 import android.os.Build
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -15,7 +17,6 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.themovieapp.network.Movie
 import com.example.themovieapp.search.MovieApiStatus
 import com.example.themovieapp.search.MovieListAdapter
-import com.example.themovieapp.search.MovieListViewModel
 
 
 /**
@@ -52,34 +53,35 @@ fun bindImage(imgView: ImageView, posterPath: String?) {
 @BindingAdapter("averageRating")
 fun bindratingBackground(textView: TextView, avgRating: Double?) {
     textView.setText(avgRating.toString())
+    val color: Int
     if (avgRating != null) {
         textView.setBackgroundResource(R.drawable.rounded_view_with_border)
         when {
             5 <= avgRating && avgRating < 6.5 ->
-                textView.background.mutate().setTint(
-                    ContextCompat.getColor(
+                
+                    color = ContextCompat.getColor(
                         textView.context, R.color.ColorRatingMediumLow
                     )
-                )
             6.5 <= avgRating && avgRating < 8 ->
-                textView.background.mutate().setTint(
-                    ContextCompat.getColor(
+                
+                    color = ContextCompat.getColor(
                         textView.context, R.color.ColorRatingMediumHigh
                     )
-                )
             8 <= avgRating ->
-                textView.background.mutate().setTint(
-                    ContextCompat.getColor(
+                    color = ContextCompat.getColor(
                         textView.context, R.color.ColorRatingHigh
                     )
-                )
             else ->
-                textView.background.mutate().setTint(
-                    ContextCompat.getColor(
+                    color = ContextCompat.getColor(
                         textView.context, R.color.ColorRatingLow
                     )
-                )
         }
+
+        val shape = GradientDrawable()
+        shape.shape = GradientDrawable.OVAL
+        shape.setColor(color)
+        shape.setStroke(2, Color.BLACK)
+        textView.setBackground(shape)
     }
 
 }
@@ -122,3 +124,7 @@ fun View.showOnlyWhenFull(data: List<Movie>?) {
 
     }
 }
+
+//public class ColorGradientDrawable : GradientDrawable() {
+//    private var mColor: Int = 0
+//}
