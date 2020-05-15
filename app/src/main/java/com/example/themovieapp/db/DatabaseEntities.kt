@@ -1,9 +1,19 @@
 package com.example.themovieapp.db
 
+import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.themovieapp.domain.Movie
 import com.squareup.moshi.Json
 
+/**
+ * Database entities go in this file. These are responsible for reading and writing from the
+ * database.
+ */
+
+/**
+ * DatabaseMovie represents a video entity in the database.
+ */
+@Entity
 data class DatabaseMovie constructor(
     @PrimaryKey
     val id: String,
@@ -15,6 +25,10 @@ data class DatabaseMovie constructor(
     val release_date: String
 )
 
+
+/**
+ * Map DatabaseMovies to domain entities
+ */
 fun List<DatabaseMovie>.asDomainModel(): List<Movie>{
     return map{
         Movie(

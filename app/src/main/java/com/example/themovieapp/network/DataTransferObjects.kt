@@ -1,6 +1,7 @@
 package com.example.themovieapp.network
 
 import android.os.Parcelable
+import com.example.themovieapp.db.DatabaseMovie
 import com.example.themovieapp.domain.Movie
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
@@ -8,7 +9,6 @@ import kotlinx.android.parcel.Parcelize
 
 @JsonClass(generateAdapter = true)
 data class NetworkMovieContainer(val movies: List<NetworkMovie>)
-
 
 
 @JsonClass(generateAdapter = true)
@@ -23,10 +23,10 @@ data class NetworkMovie(
 )
 
 /**
- * Convert Network results to database objects
+ * Convert Network results to domain objects
  */
-fun NetworkMovieContainer.asDomainModel(): List<Movie>{
-    return movies.map{
+fun NetworkMovieContainer.asDomainModel(): List<Movie> {
+    return movies.map {
         Movie(
             id = it.id,
             title = it.title,
@@ -39,12 +39,22 @@ fun NetworkMovieContainer.asDomainModel(): List<Movie>{
     }
 }
 
+/**
+ * Convert Network results to database objects
+ */
+fun NetworkMovieContainer.asDatabaseModel(): List<DatabaseMovie> {
+    return movies.map {
+        DatabaseMovie(
+            id = it.id,
+            title = it.title,
+            vote_average = it.vote_average,
+            poster_path = it.poster_path,
+            overview = it.overview,
+            adult = it.adult,
+            release_date = it.release_date
+        )
+    }
+}
 
-/*data class ResponseObject(
-    val page: Int,
-    val results: List<Movie>,
-    val total_results: Int,
-    val total_pages: Int
-)*/
 
 
