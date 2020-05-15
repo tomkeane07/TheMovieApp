@@ -20,7 +20,7 @@ import com.example.themovieapp.CustomRecyclerViewTestUtil.Companion.withItemCoun
 import com.example.themovieapp.ManagedCoroutineScope
 import com.example.themovieapp.R
 import com.example.themovieapp.TestScope
-import com.example.themovieapp.network.Movie
+import com.example.themovieapp.domain.Movie
 import kotlinx.android.synthetic.main.fragment_movie_list.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

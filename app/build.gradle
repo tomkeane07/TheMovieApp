@@ -77,6 +77,11 @@ dependencies {
     //glide
     implementation 'com.github.bumptech.glide:glide:4.11.0'
 
+    // Room dependency
+    def room_version = "2.1.0-alpha06"
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+
     //________________TEST IMPLEMENTATIONS______________________
     // Dependencies for local unit tests
     testImplementation 'junit:junit:4.13'

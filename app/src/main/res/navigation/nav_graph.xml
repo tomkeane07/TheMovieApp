@@ -28,7 +28,7 @@
         <argument
             
             android:name="selectedMovie"
-            app:argType="com.example.themovieapp.network.Movie"/>
+            app:argType="com.example.themovieapp.domain.Movie"/>
     </fragment>
 
 </navigation>

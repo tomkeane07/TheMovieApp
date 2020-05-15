@@ -1,17 +1,8 @@
-package com.example.themovieapp.network
+package com.example.themovieapp.domain
 
 import android.os.Parcelable
 import com.squareup.moshi.Json
 import kotlinx.android.parcel.Parcelize
-
-
-data class ResponseObject(
-    val page: Int,
-    val results: List<Movie>,
-    val total_results: Int,
-    val total_pages: Int
-)
-
 
 //API info: https://developers.themoviedb.org/3/movies/get-top-rated-movies
 @Parcelize

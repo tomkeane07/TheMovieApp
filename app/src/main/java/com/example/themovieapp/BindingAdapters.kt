@@ -14,7 +14,7 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.example.themovieapp.network.Movie
+import com.example.themovieapp.domain.Movie
 import com.example.themovieapp.search.MovieApiStatus
 import com.example.themovieapp.search.MovieListAdapter
 

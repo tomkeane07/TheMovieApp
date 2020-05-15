@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.themovieapp.databinding.MovieListItemBinding
-import com.example.themovieapp.network.Movie
+import com.example.themovieapp.domain.Movie
 
 
 /**

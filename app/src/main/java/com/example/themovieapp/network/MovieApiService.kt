@@ -31,7 +31,7 @@ interface MovieApiService{
         @Query("api_key") apiKey: String = API_key,
         @Query("language") language: String = "en-US",
         @Query("page") page: Int
-    ): Deferred<ResponseObject>
+    ): Deferred<NetworkMovieContainer>
 }
 
 

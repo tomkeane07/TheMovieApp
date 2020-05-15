@@ -3,10 +3,13 @@ package com.example.themovieapp.search
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.example.themovieapp.ManagedCoroutineScope
-import com.example.themovieapp.network.Movie
+import com.example.themovieapp.domain.Movie
 import com.example.themovieapp.network.MovieApi
+import com.example.themovieapp.network.asDomainModel
 import kotlinx.coroutines.cancel
+import java.lang.IllegalArgumentException
 
 enum class MovieApiStatus { LOADING, ERROR, DONE }
 
@@ -48,7 +51,7 @@ class MovieListViewModel(val coroutineScope: ManagedCoroutineScope) : ViewModel(
                     _movieList.value = ArrayList()
                 }
                 pageCount = pageNumber.inc()
-                _movieList.value = movieList.value!!.toList().plus(responseObject.results)
+                _movieList.value = movieList.value!!.toList().plus(responseObject.asDomainModel())
                     .sortedByDescending { it.vote_average }
             } catch (e: Exception) {
                 _status.value = MovieApiStatus.ERROR
@@ -81,5 +84,20 @@ class MovieListViewModel(val coroutineScope: ManagedCoroutineScope) : ViewModel(
     override fun onCleared() {
         super.onCleared()
         coroutineScope.cancel()
+    }
+}
+
+
+class MovieListViewModelFactory(
+    private val managedCoroutineScope: ManagedCoroutineScope
+):
+    ViewModelProvider.Factory{
+    @Suppress("unchecked_cast")
+
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        if(modelClass.isAssignableFrom(MovieListViewModel::class.java)){
+            return MovieListViewModel(managedCoroutineScope) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel Class")
     }
 }

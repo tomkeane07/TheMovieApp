@@ -2,7 +2,7 @@ package com.example.themovieapp.movieDetails;
 
 import android.app.Application
 import androidx.lifecycle.*
-import com.example.themovieapp.network.Movie
+import com.example.themovieapp.domain.Movie
 
 
 class MovieDetailViewModel(

@@ -11,7 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.themovieapp.LifecycleManagedCoroutineScope
 import com.example.themovieapp.databinding.FragmentMovieListBinding
-import com.example.themovieapp.network.Movie
+import com.example.themovieapp.domain.Movie
 
 
 class MovieListFragment : Fragment() {

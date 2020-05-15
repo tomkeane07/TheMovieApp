@@ -19,7 +19,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.internal.util.Checks
 import com.example.themovieapp.R
-import com.example.themovieapp.network.Movie
+import com.example.themovieapp.domain.Movie
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.equalTo
@@ -165,7 +165,7 @@ class MovieDetailFragmentContentTest {
             }
 
             override fun describeTo(description: Description) {
-                description.appendText("with background color: $expectedColor")
+                description.appendText("withBackgroundColor for movieRating: ${movie.vote_average}")
             }
         }
     }
