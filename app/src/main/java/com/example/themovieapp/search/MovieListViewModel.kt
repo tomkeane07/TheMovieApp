@@ -59,6 +59,8 @@ class MovieListViewModel(val coroutineScope: ManagedCoroutineScope) : ViewModel(
             }
         }
 
+    
+
 
     fun onLoadMoreMoviesClicked() =
         getMovies(pageCount)
