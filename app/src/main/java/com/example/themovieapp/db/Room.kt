@@ -1,13 +1,12 @@
-package com.example.themovieapp.domain
+package com.example.themovieapp.db
 
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.example.themovieapp.db.DatabaseMovie
 
 @Dao
 interface MovieDao {
-    @Query("select * from databasemovie")
+    @Query("select * from DatabaseMovie")
     fun getMovies(): LiveData<List<DatabaseMovie>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -24,11 +23,11 @@ private lateinit var INSTANCE: MoviesDatabase
 fun getDatabase(context: Context): MoviesDatabase {
     synchronized(MoviesDatabase::class.java) {
         if (!::INSTANCE.isInitialized) {
-            INSTANCE = Room.databaseBuilder(
-                context.applicationContext,
-                MoviesDatabase::class.java,
-                "movies"
-            ).build()
+            INSTANCE =
+                Room.databaseBuilder(
+                    context.applicationContext,
+                    MoviesDatabase::class.java,
+                    "movies").build()
         }
     }
     return INSTANCE

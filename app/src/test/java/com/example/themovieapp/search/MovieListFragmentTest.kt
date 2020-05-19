@@ -64,17 +64,17 @@ open class MovieListFragmentTest {
         testDispatcher.cleanupTestCoroutines()
     }
 
-    @Test
+/*    @Test
     fun recyclerViewCountTest() {
         managedCoroutineScope.launch {
             onView(withId(R.id.movie_list))
                 .check(ViewAssertions.matches(withItemCount(20)))
 
 //            simulate button press and test again
-            onView(withId(R.id.load_more_button)).perform(ViewActions.click())
+            onView(withId(R.id.load_more_button)).perform(click())
                 .check(ViewAssertions.matches((withItemCount(40))))
         }
-    }
+    }*/
 
     @Test
     fun navToMovieDetailTest() {

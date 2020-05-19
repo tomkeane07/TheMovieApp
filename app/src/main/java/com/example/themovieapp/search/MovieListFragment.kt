@@ -23,22 +23,22 @@ class MovieListFragment : Fragment() {
     //using this var for fragmentTesting purposes
     lateinit var selectedMovie: Movie
 
+    val application = requireNotNull(activity).application
+    val viewModel = ViewModelProviders.of(
+        this,
+        MovieListViewModelFactory(
+            LifecycleManagedCoroutineScope(
+                lifecycleScope,
+                lifecycleScope.coroutineContext
+            ),
+            application
+        )
+    ).get(MovieListViewModel::class.java)
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        val viewModel = ViewModelProviders.of(
-            this,
-            MovieListViewModelFactory(
-                LifecycleManagedCoroutineScope(
-                    lifecycleScope,
-                    lifecycleScope.coroutineContext
-                )
-            )
-        ).get(MovieListViewModel::class.java)
-
-
 
         val binding = FragmentMovieListBinding.inflate(inflater)
 
@@ -74,4 +74,6 @@ class MovieListFragment : Fragment() {
         setHasOptionsMenu(true)
         return binding.root
     }
+
+
 }

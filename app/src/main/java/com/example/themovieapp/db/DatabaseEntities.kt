@@ -19,7 +19,7 @@ data class DatabaseMovie constructor(
     val id: String,
     val title: String,
     val vote_average: Double,
-    @Json(name = "poster_path") val poster_path: String?,
+    val poster_path: String?,
     val overview: String,
     val adult: Boolean,
     val release_date: String

@@ -1,5 +1,7 @@
 package com.example.themovieapp.search
 
+import android.app.Application
+import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.themovieapp.ManagedCoroutineScope
 import com.example.themovieapp.TestScope
@@ -15,6 +17,9 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.Mock
+import org.mockito.Mockito.mock
+import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 
 
@@ -24,6 +29,8 @@ class MovieListViewModelTest {
 
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()
+    @Mock
+    private lateinit var application: Application
 
     private val testDispatcher = TestCoroutineDispatcher()
     private val managedCoroutineScope: ManagedCoroutineScope = TestScope(testDispatcher)
@@ -32,8 +39,9 @@ class MovieListViewModelTest {
 
     @Before
     fun setup() {
+        MockitoAnnotations.initMocks(this)
         Dispatchers.setMain(testDispatcher)
-        viewModel = MovieListViewModel(managedCoroutineScope)
+        viewModel = MovieListViewModel(managedCoroutineScope, application)
 
     }
 
@@ -70,5 +78,10 @@ class MovieListViewModelTest {
             )
 
         }
+    }
+
+    @Test
+    fun repoTest(){
+        viewModel.refreshDataFromRepository(1)
     }
 }

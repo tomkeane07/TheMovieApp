@@ -7,6 +7,14 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import kotlinx.android.parcel.Parcelize
 
+data class NetworkResponseObject(
+    val page: Int,
+    val results: List<NetworkMovie>,
+    val total_results: Int,
+    val total_pages: Int
+)
+
+
 @JsonClass(generateAdapter = true)
 data class NetworkMovieContainer(val movies: List<NetworkMovie>)
 
@@ -16,7 +24,7 @@ data class NetworkMovie(
     val id: String,
     val title: String,
     val vote_average: Double,
-    @Json(name = "poster_path") val poster_path: String?,
+    val poster_path: String?,
     val overview: String,
     val adult: Boolean,
     val release_date: String
