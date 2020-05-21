@@ -4,11 +4,20 @@ import android.app.Application
 import com.facebook.stetho.Stetho
 import timber.log.Timber
 
-class MovieAppApplication: Application() {
+open class MovieAppApplication: Application() {
     @Override
-    public override fun onCreate() {
+    override fun onCreate() {
         super.onCreate()
         Stetho.initializeWithDefaults(this)
         Timber.plant(Timber.DebugTree())
+        if (BuildConfig.DEBUG) {
+            if (!isUnitTesting()) {
+                Stetho.initializeWithDefaults(this);
+            }
+        }
+    }
+
+    protected open fun  isUnitTesting(): Boolean{
+        return false;
     }
 }

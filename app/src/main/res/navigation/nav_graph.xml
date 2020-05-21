@@ -18,6 +18,9 @@
 
         <action android:id="@+id/action_movieListFragment_to_MovieDetailFragment"
             app:destination="@id/movieDetailFragment"/>
+        <action
+            android:id="@+id/action_movieSearch_to_home"
+            app:destination="@id/home" />
     </fragment>
 
     <fragment

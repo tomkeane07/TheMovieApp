@@ -6,11 +6,14 @@ import androidx.room.*
 
 @Dao
 interface MovieDao {
-    @Query("select * from DatabaseMovie")
-    fun getMovies(): LiveData<List<DatabaseMovie>>
+    @Query("select * from databasemovie")
+    suspend fun getMovies(): List<DatabaseMovie>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(movies: List<DatabaseMovie>)
+
+    @Query("delete from databasemovie")
+    suspend fun deleteAll()
 }
 
 @Database(entities = [DatabaseMovie::class], version = 1)
@@ -23,11 +26,11 @@ private lateinit var INSTANCE: MoviesDatabase
 fun getDatabase(context: Context): MoviesDatabase {
     synchronized(MoviesDatabase::class.java) {
         if (!::INSTANCE.isInitialized) {
-            INSTANCE =
-                Room.databaseBuilder(
-                    context.applicationContext,
-                    MoviesDatabase::class.java,
-                    "movies").build()
+            INSTANCE = Room.databaseBuilder(
+                context.applicationContext,
+                MoviesDatabase::class.java,
+                "movies"
+            ).build()
         }
     }
     return INSTANCE

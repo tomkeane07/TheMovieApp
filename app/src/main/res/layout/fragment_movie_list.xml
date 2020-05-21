@@ -46,7 +46,20 @@
             app:showOnlyWhenEmpty="@{viewModel.movieList}"
             tools:visibility="gone" />
 
-
+        <ImageButton
+            android:id="@+id/clearDB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/load_more_button"
+            app:layout_constraintHorizontal_bias="0.08"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/load_more_button"
+            app:layout_constraintVertical_bias="0.0"
+            android:onClick="@{() -> viewModel.clearDB()}"
+            app:showOnlyWhenFull="@{viewModel.movieList}"
+            tools:visibility="invisible"
+            app:srcCompat="@android:drawable/ic_menu_delete"
+            android:contentDescription="@string/clear_movie_list" />
 
         <Button
             android:id="@+id/load_more_button"

@@ -78,9 +78,12 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.11.0'
 
     // Room dependency
-    def room_version = "2.1.0-beta01"
+    def room_version = "2.2.5"
     implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
+
+    implementation "android.arch.persistence.room:rxjava2:1.1.1"
 
     // Gradle dependency on Stetho
     implementation 'com.facebook.stetho:stetho:1.5.0'
@@ -124,6 +127,7 @@ dependencies {
     testImplementation 'junit:junit:4.12',
             'org.mockito:mockito-core:2.23.0',
             'com.nhaarman.mockitokotlin2:mockito-kotlin:2.0.0',
+            'org.mockito:mockito-inline:2.13.0',
             "org.jetbrains.kotlinx:kotlinx-coroutines-test:$KOTLIN_COROUTINES_VERSION"
 
     testImplementation('com.android.support.test.espresso:espresso-contrib:3.2.0') {

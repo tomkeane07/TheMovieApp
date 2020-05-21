@@ -4,41 +4,45 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.Nullable
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.themovieapp.LifecycleManagedCoroutineScope
+import com.example.themovieapp.R
 import com.example.themovieapp.databinding.FragmentMovieListBinding
+import com.example.themovieapp.db.DatabaseMovie
+import com.example.themovieapp.db.asDomainModel
 import com.example.themovieapp.domain.Movie
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import timber.log.Timber
 
 
 class MovieListFragment : Fragment() {
 
-/*    private val viewModel: MovieListViewModel by lazy {
-        ViewModelProviders.of(this).get(MovieListViewModel::class.java)
-    }*/
-
     //using this var for fragmentTesting purposes
     lateinit var selectedMovie: Movie
-
-    val application = requireNotNull(activity).application
-    val viewModel = ViewModelProviders.of(
-        this,
-        MovieListViewModelFactory(
-            LifecycleManagedCoroutineScope(
-                lifecycleScope,
-                lifecycleScope.coroutineContext
-            ),
-            application
-        )
-    ).get(MovieListViewModel::class.java)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        val application = requireNotNull(activity).application
+        val viewModel = ViewModelProviders.of(
+            this,
+            MovieListViewModelFactory(
+                LifecycleManagedCoroutineScope(
+                    lifecycleScope,
+                    lifecycleScope.coroutineContext
+                ),
+                application
+            )
+        ).get(MovieListViewModel::class.java)
 
         val binding = FragmentMovieListBinding.inflate(inflater)
 
@@ -71,9 +75,18 @@ class MovieListFragment : Fragment() {
             }
         })
 
+        //Observes change in LiveData, then performs navigation
+        viewModel.dbEmpty.observe(viewLifecycleOwner,
+            Observer<Boolean> { navigate ->
+                if (navigate) {
+                    val navController = findNavController()
+                    navController.navigate(R.id.action_movieSearch_to_home)
+                    viewModel.dbCleared()
+                }
+            }
+        )
+
         setHasOptionsMenu(true)
         return binding.root
     }
-
-
 }

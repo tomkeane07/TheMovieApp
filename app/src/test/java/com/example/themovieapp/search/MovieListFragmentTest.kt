@@ -54,9 +54,10 @@ open class MovieListFragmentTest {
     private val managedCoroutineScope: ManagedCoroutineScope = TestScope(testDispatcher)
 
     @Before
-    fun setUp() {
-        managedCoroutineScope.launch { scenario = launchFragmentInContainer<MovieListFragment>() }
+    fun setUp() = managedCoroutineScope.launch {
+        scenario = launchFragmentInContainer<MovieListFragment>()
     }
+
 
     @After
     fun tearDown() {

@@ -1,7 +1,10 @@
 package com.example.themovieapp.repository
 
+import androidx.annotation.Nullable
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.Transformations
+import com.example.themovieapp.db.DatabaseMovie
 import com.example.themovieapp.db.asDomainModel
 import com.example.themovieapp.domain.Movie
 import com.example.themovieapp.db.MoviesDatabase
@@ -18,12 +21,8 @@ import java.lang.Thread.sleep
  */
 class MoviesRepository(private val database: MoviesDatabase) {
 
-    val movies: LiveData<List<Movie>> =
-        Transformations.map(
-            database.movieDao.getMovies()
-        ) {
-            it.asDomainModel()
-        }
+
+    lateinit var domMovies: List<Movie>
 
     /**
      * Refresh the movies stored in the offline cache.
@@ -38,13 +37,12 @@ class MoviesRepository(private val database: MoviesDatabase) {
             Timber.d("refresh videos is called")
             val netResObject =
                 MovieApi.retrofitService.getMoviesAsync(page = pageNumber).await()
-            val movieList =
+            val netMovies =
                 NetworkMovieContainer(netResObject.results)
+            database.movieDao.insertAll(netMovies.asDatabaseModel())
 
-            movieList.asDatabaseModel().forEach {
-                Timber.d(it.toString())
-            }
-            database.movieDao.insertAll(movieList.asDatabaseModel())
+            domMovies =
+                database.movieDao.getMovies().asDomainModel()
         }
     }
 }

@@ -1,9 +1,11 @@
 package com.example.themovieapp.db
 
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.themovieapp.domain.Movie
 import com.squareup.moshi.Json
+import kotlinx.android.parcel.Parcelize
 
 /**
  * Database entities go in this file. These are responsible for reading and writing from the
@@ -14,6 +16,7 @@ import com.squareup.moshi.Json
  * DatabaseMovie represents a video entity in the database.
  */
 @Entity
+@Parcelize
 data class DatabaseMovie constructor(
     @PrimaryKey
     val id: String,
@@ -23,14 +26,14 @@ data class DatabaseMovie constructor(
     val overview: String,
     val adult: Boolean,
     val release_date: String
-)
+) : Parcelable
 
 
 /**
  * Map DatabaseMovies to domain entities
  */
-fun List<DatabaseMovie>.asDomainModel(): List<Movie>{
-    return map{
+fun List<DatabaseMovie>.asDomainModel(): List<Movie> {
+    return map {
         Movie(
             id = it.id,
             title = it.title,
