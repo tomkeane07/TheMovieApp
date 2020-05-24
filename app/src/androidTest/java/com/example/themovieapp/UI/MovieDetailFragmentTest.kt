@@ -1,13 +1,11 @@
-package com.example.themovieapp.movieDetails
+package com.example.themovieapp.UI
 
-import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.toColor
 import androidx.core.os.bundleOf
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
@@ -16,23 +14,17 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.BoundedMatcher
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.internal.util.Checks
 import com.example.themovieapp.R
 import com.example.themovieapp.domain.Movie
+import com.example.themovieapp.movieDetails.MovieDetailFragment
 import org.hamcrest.Description
 import org.hamcrest.Matcher
-import org.hamcrest.Matchers.equalTo
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.robolectric.annotation.LooperMode
-import org.robolectric.annotation.LooperMode.Mode.PAUSED
 
 
-@RunWith(AndroidJUnit4::class)
-@LooperMode(PAUSED)
 class MovieDetailFragmentContentTest {
 
     @get:Rule

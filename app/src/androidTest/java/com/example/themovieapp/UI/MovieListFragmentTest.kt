@@ -1,50 +1,33 @@
-package com.example.themovieapp.search
+package com.example.themovieapp.UI
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.core.view.get
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.ViewAssertion
-import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.contrib.RecyclerViewActions
-import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.example.themovieapp.CustomRecyclerViewTestUtil.Companion.withItemCount
 import com.example.themovieapp.ManagedCoroutineScope
 import com.example.themovieapp.R
 import com.example.themovieapp.TestScope
-import com.example.themovieapp.domain.Movie
-import kotlinx.android.synthetic.main.fragment_movie_list.*
+import com.example.themovieapp.search.MovieListFragment
+import com.example.themovieapp.search.MovieListFragmentDirections
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.resetMain
-import org.apache.tools.ant.types.Assertions
-import org.apache.tools.ant.types.Resource
-import org.hamcrest.MatcherAssert.assertThat
 import org.junit.After
-import org.junit.Assert.assertThat
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 import org.mockito.Mockito
-import java.lang.Thread.sleep
-import java.util.concurrent.Callable
 
 
 @ExperimentalCoroutinesApi
-@RunWith(AndroidJUnit4::class)
-open class MovieListFragmentTest {
+class MovieListFragmentTest {
 
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()
@@ -54,8 +37,10 @@ open class MovieListFragmentTest {
     private val managedCoroutineScope: ManagedCoroutineScope = TestScope(testDispatcher)
 
     @Before
-    fun setUp() = managedCoroutineScope.launch {
-        scenario = launchFragmentInContainer<MovieListFragment>()
+    fun setUp(){
+        managedCoroutineScope.launch {
+            scenario = launchFragmentInContainer<MovieListFragment>()
+        }
     }
 
 
