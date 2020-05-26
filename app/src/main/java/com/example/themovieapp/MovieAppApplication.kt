@@ -8,16 +8,17 @@ open class MovieAppApplication: Application() {
     @Override
     override fun onCreate() {
         super.onCreate()
-        Stetho.initializeWithDefaults(this)
         Timber.plant(Timber.DebugTree())
         if (BuildConfig.DEBUG) {
             if (!isUnitTesting()) {
-                Stetho.initializeWithDefaults(this);
+                Stetho.initializeWithDefaults(this)
             }
         }
     }
 
     protected open fun  isUnitTesting(): Boolean{
-        return false;
+        //return false;
+        //until testApp class is ready
+        return true
     }
 }

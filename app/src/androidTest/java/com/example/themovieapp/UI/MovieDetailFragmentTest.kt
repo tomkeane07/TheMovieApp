@@ -117,7 +117,7 @@ class MovieDetailFragmentContentTest {
 
 
     fun setMovieSample(vote_average: Double): Movie {
-        val movieSample = Movie(
+        return Movie(
             "346",
             "Seven Samurai",
             vote_average,
@@ -129,7 +129,6 @@ class MovieDetailFragmentContentTest {
             false,
             "1954-04-26"
         )
-        return movieSample
     }
 
 
