@@ -43,6 +43,8 @@ class MoviesRepository(private val database: MoviesDatabase) {
 
             domMovies =
                 database.movieDao.getMovies().asDomainModel()
+                    .sortedByDescending { it.vote_average }
+            return@withContext domMovies
         }
     }
 }

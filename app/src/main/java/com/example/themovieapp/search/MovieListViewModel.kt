@@ -30,7 +30,7 @@ class MovieListViewModel(
         get() = _movieList
 
     //movies received from repo(max of 60)
-    lateinit var dbMovies: List<Movie>
+    lateinit var repoMovies: List<Movie>
 
     //add more from web
     lateinit var webMovies: List<Movie>
@@ -90,9 +90,9 @@ class MovieListViewModel(
                 moviesRepository.refreshMovies(pageNumber)
                 _status.value = MovieApiStatus.DONE
                 pageCount = pageNumber.inc()
-                dbMovies = getDatabase(application).movieDao.getMovies().asDomainModel()
+                repoMovies = moviesRepository.domMovies
                 //update MovieList
-                _movieList.value = dbMovies
+                _movieList.value = repoMovies
 
                 Timber.d("${_movieList.value?.size}")
                 Timber.d("$pageCount")
@@ -133,7 +133,8 @@ class MovieListViewModel(
         pageCount = 0
         _dbEmpty.value = true
     }
-    fun dbCleared(){
+
+    fun dbCleared() {
         _dbEmpty.value = false
     }
 

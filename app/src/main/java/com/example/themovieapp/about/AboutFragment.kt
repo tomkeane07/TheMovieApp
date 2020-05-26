@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import mehdi.sakout.aboutpage.AboutPage
 
 
-class AboutFragment: Fragment(){
+class AboutFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -18,12 +18,12 @@ class AboutFragment: Fragment(){
     ): View? {
         return AboutPage(context)
             .isRTL(false)
-
             .setImage(com.example.themovieapp.R.mipmap.ic_launcher)
             .setDescription(getString(com.example.themovieapp.R.string.about_app))
             .addGroup("Connect with us!")
             .addEmail("tomkeane07@gmail.com", "email")
             .addGitHub("https://github.com/tomkeane07/TheMovieApp/tree/development", "Github")
+            //GIthub doesn't work on android browser.. nav to github app in store?
             .create()
     }
 }

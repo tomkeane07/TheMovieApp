@@ -7,6 +7,7 @@ import kotlinx.coroutines.Deferred
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 private const val BASE_URL = "https://api.themoviedb.org/3/"
@@ -32,7 +33,14 @@ interface MovieApiService{
         @Query("language") language: String = "en-US",
         @Query("page") page: Int
     ): Deferred<NetworkResponseObject>
+
+    @GET("movie/movie_id/recommendations")
+    fun getRelatedMoviesAsync(
+        @Query("api_key") apiKey: String = API_key,
+        @Path("movie_id") movie_id: Int
+        ): Deferred<NetworkResponseObject>
 }
+
 
 
 /*

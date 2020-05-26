@@ -4,28 +4,32 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/home">
 
-    <fragment android:id="@+id/home"
+    <fragment
+        android:id="@+id/home"
         android:name="com.example.themovieapp.home.HomeFragment"
-        android:label="Home" tools:layout="@layout/home_fragment">
-        <action android:id="@+id/action_homeFragment_to_movieListFragment"
-            app:destination="@id/movieSearch"/>
-        <action android:id="@+id/action_homeFragment_to_aboutAppFragment"
-            app:destination="@id/about_App"/>
+        android:label="Home"
+        tools:layout="@layout/home_fragment">
+        <action
+            android:id="@+id/action_homeFragment_to_movieListFragment"
+            app:destination="@id/movieSearch" />
+        <action
+            android:id="@+id/action_homeFragment_to_aboutAppFragment"
+            app:destination="@id/about_App" />
     </fragment>
 
     <fragment
         android:id="@+id/about_App"
         android:name="com.example.themovieapp.about.AboutFragment"
-        android:label="about us">
-    </fragment>
+        android:label="about us"></fragment>
 
     <fragment
         android:id="@+id/movieSearch"
         android:name="com.example.themovieapp.search.MovieListFragment"
         android:label="movie Search">
 
-        <action android:id="@+id/action_movieListFragment_to_MovieDetailFragment"
-            app:destination="@id/movieDetailFragment"/>
+        <action
+            android:id="@+id/action_movieListFragment_to_MovieDetailFragment"
+            app:destination="@id/movieDetailFragment" />
         <action
             android:id="@+id/action_movieSearch_to_home"
             app:destination="@id/home" />
@@ -37,9 +41,8 @@
         android:label="movie detail"
         tools:layout="@layout/movie_detail_fragment">
         <argument
-            
             android:name="selectedMovie"
-            app:argType="com.example.themovieapp.domain.Movie"/>
+            app:argType="com.example.themovieapp.domain.Movie" />
     </fragment>
 
 </navigation>

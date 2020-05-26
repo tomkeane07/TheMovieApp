@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.lifecycleScope
+import com.example.themovieapp.LifecycleManagedCoroutineScope
 import com.example.themovieapp.databinding.MovieDetailFragmentBinding
 
 
@@ -14,10 +16,12 @@ import com.example.themovieapp.databinding.MovieDetailFragmentBinding
  * It sets this information in the [MovieDetailViewModel], which it gets as a Parcelable property
  * through Jetpack Navigation's SafeArgs.
  */
-class MovieDetailFragment: Fragment(){
+class MovieDetailFragment : Fragment() {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
         val application = requireNotNull(activity).application
         val binding = MovieDetailFragmentBinding.inflate(inflater)
@@ -26,7 +30,13 @@ class MovieDetailFragment: Fragment(){
 
         val movie = MovieDetailFragmentArgs.fromBundle(requireArguments()).selectedMovie
         binding.viewModel = ViewModelProviders.of(
-            this, MovieDetailViewModelFactory(movie, application)
+            this, MovieDetailViewModelFactory(
+                LifecycleManagedCoroutineScope(
+                    lifecycleScope,
+                    lifecycleScope.coroutineContext
+                ),
+                movie, application
+            )
         ).get(MovieDetailViewModel::class.java)
 
         return binding.root
