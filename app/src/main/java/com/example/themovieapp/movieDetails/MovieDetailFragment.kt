@@ -9,6 +9,8 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.lifecycleScope
 import com.example.themovieapp.LifecycleManagedCoroutineScope
 import com.example.themovieapp.databinding.MovieDetailFragmentBinding
+import com.example.themovieapp.search.MovieClickListener
+import com.example.themovieapp.search.MovieListAdapter
 
 
 /**
@@ -38,6 +40,11 @@ class MovieDetailFragment : Fragment() {
                 movie, application
             )
         ).get(MovieDetailViewModel::class.java)
+
+        binding.movieList.adapter = MovieListAdapter(MovieClickListener { //movie ->
+//            viewModel.displayMovieDetails(movie)
+//            selectedMovie = movie
+        })
 
         return binding.root
     }

@@ -34,10 +34,12 @@ interface MovieApiService{
         @Query("page") page: Int
     ): Deferred<NetworkResponseObject>
 
-    @GET("movie/movie_id/recommendations")
+    @GET("movie/{movie_id}/recommendations")
     fun getRelatedMoviesAsync(
+        @Path("movie_id") movie_id: String,
         @Query("api_key") apiKey: String = API_key,
-        @Path("movie_id") movie_id: Int
+        @Query("language") language: String = "en-US",
+        @Query("page") page: Int = 1
         ): Deferred<NetworkResponseObject>
 }
 
