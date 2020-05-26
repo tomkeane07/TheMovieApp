@@ -10,7 +10,7 @@ import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.themovieapp.R
-import com.example.themovieapp.getOrAwaitValue
+import com.example.themovieapp.testUtils.getOrAwaitValue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

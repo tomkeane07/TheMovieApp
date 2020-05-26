@@ -1,4 +1,6 @@
-package com.example.themovieapp
+package com.example.themovieapp.testUtils
+
+import com.example.themovieapp.MovieAppApplication
 
 class TestMovieAppApplication: MovieAppApplication() {
     protected override fun isUnitTesting(): Boolean {

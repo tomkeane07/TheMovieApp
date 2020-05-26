@@ -1,7 +1,7 @@
 /*[SOURCE]
 https://medium.com/2359media/custom-recyclerview-matcher-and-viewassertion-with-espresso-kotlin-45845c64ab44
 */
-package com.example.themovieapp
+package com.example.themovieapp.testUtils
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
@@ -33,7 +33,9 @@ class CustomRecyclerViewTestUtil {
 class CustomAssertions {
     companion object {
         fun hasItemCount(count: Int): ViewAssertion {
-            return RecyclerViewItemCountAssertion(count)
+            return RecyclerViewItemCountAssertion(
+                count
+            )
         }
     }
 

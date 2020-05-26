@@ -1,4 +1,4 @@
-package com.example.themovieapp
+package com.example.themovieapp.testUtils
 //https://codelabs.developers.google.com/codelabs/advanced-android-kotlin-training-testing-basics/index.html?index=..%2F..advanced-android-kotlin-training#8
 
 import androidx.annotation.VisibleForTesting
