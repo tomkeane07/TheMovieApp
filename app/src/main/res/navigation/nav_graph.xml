@@ -9,6 +9,14 @@
         android:label="Home" tools:layout="@layout/home_fragment">
         <action android:id="@+id/action_homeFragment_to_movieListFragment"
             app:destination="@id/movieSearch"/>
+        <action android:id="@+id/action_homeFragment_to_aboutAppFragment"
+            app:destination="@id/about_App"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/about_App"
+        android:name="com.example.themovieapp.about.AboutFragment"
+        android:label="about us">
     </fragment>
 
     <fragment

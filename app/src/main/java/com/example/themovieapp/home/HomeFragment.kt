@@ -13,9 +13,6 @@ import com.example.themovieapp.databinding.HomeFragmentBinding
 
 class HomeFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = HomeFragment()
-    }
 
     private lateinit var viewModel: HomeViewModel
     fun getViewModel(): HomeViewModel {
