@@ -1,4 +1,4 @@
-package com.example.themovieapp
+package com.example.themovieapp.utils
 
 import androidx.lifecycle.LifecycleCoroutineScope
 import kotlinx.coroutines.CoroutineScope
@@ -14,11 +14,13 @@ interface ManagedCoroutineScope : CoroutineScope {
 
 class LifecycleManagedCoroutineScope(
     private val lifecycleCoroutineScope: LifecycleCoroutineScope,
-    override val coroutineContext: CoroutineContext = lifecycleCoroutineScope.coroutineContext) : ManagedCoroutineScope {
+    override val coroutineContext: CoroutineContext = lifecycleCoroutineScope.coroutineContext) :
+    ManagedCoroutineScope {
     override fun launch(block: suspend CoroutineScope.() -> Unit): Job = lifecycleCoroutineScope.launchWhenStarted(block)
 }
 
-class TestScope(override val coroutineContext: CoroutineContext) : ManagedCoroutineScope {
+class TestScope(override val coroutineContext: CoroutineContext) :
+    ManagedCoroutineScope {
     @ExperimentalCoroutinesApi
     val scope = TestCoroutineScope(coroutineContext)
     @ExperimentalCoroutinesApi

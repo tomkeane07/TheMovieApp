@@ -1,6 +1,7 @@
-package com.example.themovieapp
+package com.example.themovieapp.utils
 
 import android.app.Application
+import com.example.themovieapp.BuildConfig
 import com.facebook.stetho.Stetho
 import timber.log.Timber
 

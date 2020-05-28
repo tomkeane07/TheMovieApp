@@ -1,14 +1,13 @@
 package com.example.themovieapp
 
-import com.nhaarman.mockitokotlin2.verify
 import com.example.themovieapp.db.MoviesDatabase
 import com.example.themovieapp.testUtils.DatabaseTestUtils
 import com.example.themovieapp.testUtils.SampleMovie
+import com.example.themovieapp.utils.ManagedCoroutineScope
+import com.example.themovieapp.utils.TestScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestCoroutineDispatcher
-import org.junit.Assert
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -16,7 +15,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito
 import org.robolectric.RobolectricTestRunner
-import java.util.concurrent.CountDownLatch
 
 @ExperimentalCoroutinesApi
 @RunWith(RobolectricTestRunner::class)
@@ -24,7 +22,8 @@ class MoviesDatabaseTest {
     private lateinit var spyDb: MoviesDatabase
 
     private val testDispatcher = TestCoroutineDispatcher()
-    private val testScope: ManagedCoroutineScope = TestScope(testDispatcher)
+    private val testScope: ManagedCoroutineScope =
+        TestScope(testDispatcher)
 
     @Before
     fun setup() {

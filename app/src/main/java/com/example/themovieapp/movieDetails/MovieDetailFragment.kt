@@ -4,13 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.lifecycleScope
-import com.example.themovieapp.LifecycleManagedCoroutineScope
+import androidx.navigation.fragment.findNavController
 import com.example.themovieapp.databinding.MovieDetailFragmentBinding
+import com.example.themovieapp.domain.Movie
 import com.example.themovieapp.search.MovieClickListener
 import com.example.themovieapp.search.MovieListAdapter
+import com.example.themovieapp.utils.LifecycleManagedCoroutineScope
+import kotlinx.android.synthetic.main.movie_detail_fragment.*
 
 
 /**
@@ -19,6 +24,8 @@ import com.example.themovieapp.search.MovieListAdapter
  * through Jetpack Navigation's SafeArgs.
  */
 class MovieDetailFragment : Fragment() {
+
+    lateinit var selectedMovie: Movie
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,7 +38,7 @@ class MovieDetailFragment : Fragment() {
 
 
         val movie = MovieDetailFragmentArgs.fromBundle(requireArguments()).selectedMovie
-        binding.viewModel = ViewModelProviders.of(
+        val viewModel = ViewModelProviders.of(
             this, MovieDetailViewModelFactory(
                 LifecycleManagedCoroutineScope(
                     lifecycleScope,
@@ -41,11 +48,41 @@ class MovieDetailFragment : Fragment() {
             )
         ).get(MovieDetailViewModel::class.java)
 
-        binding.movieList.adapter = MovieListAdapter(MovieClickListener { //movie ->
-//            viewModel.displayMovieDetails(movie)
-//            selectedMovie = movie
+        binding.viewModel = viewModel
+
+        binding.movieList.adapter = MovieListAdapter(MovieClickListener { movie ->
+            viewModel.displayMovieDetails(movie)
+            selectedMovie = movie
         })
+
+        // Observe the navigateToSelectedProperty LiveData and Navigate when it isn't null
+        // After navigating, call displayPropertyDetailsComplete() so that the ViewModel is ready
+        // for another navigation event.
+        viewModel.navigateToSelectedMovie.observe(viewLifecycleOwner, Observer {
+            if (null != it) {
+                // Must find the NavController from the Fragment
+                this.findNavController().navigate(
+                    MovieDetailFragmentDirections
+                        .actionMovieDetailFragmentSelf(it)
+                )
+                // Tell the ViewModel we've made the navigate call to prevent multiple navigation
+                viewModel.displayMovieDetailsComplete()
+            }
+        })
+//        movie_overview.setOnClickListener {
+//            expandTextView(it as TextView)
+//        }
 
         return binding.root
     }
+
+//    var overviewExpanded = true
+//    fun expandTextView(view: TextView) {
+//        if (!overviewExpanded) {
+//            view.setMaxLines(Int.MAX_VALUE)
+//        } else {
+//            view.setMaxLines(1)
+//        }
+//        overviewExpanded = !overviewExpanded
+//    }
 }

@@ -1,8 +1,9 @@
 package com.example.themovieapp.movieDetails;
 
 import android.app.Application
+import android.widget.TextView
 import androidx.lifecycle.*
-import com.example.themovieapp.ManagedCoroutineScope
+import com.example.themovieapp.utils.ManagedCoroutineScope
 import com.example.themovieapp.domain.Movie
 import com.example.themovieapp.network.MovieApi
 import com.example.themovieapp.network.NetworkMovieContainer
@@ -33,6 +34,12 @@ class MovieDetailViewModel(
     val recommendedMovies: LiveData<List<Movie>>
         get() = _recommendedMovies
 
+    // LiveData to handle navigation to the selected movie
+    private val _navigateToSelectedMovie = MutableLiveData<Movie>()
+    val navigateToSelectedMovie: LiveData<Movie>
+        get() = _navigateToSelectedMovie
+
+
 
     //initialize the _selectedMovie MutableLiveData
     init {
@@ -52,9 +59,20 @@ class MovieDetailViewModel(
         }
     }
 
+    /**
+     * When the movie is clicked, set the [_navigateToSelectedMovie] [MutableLiveData]
+     * @param movie The [Movie] that was clicked on.
+     */
+    fun displayMovieDetails(movie: Movie) {
+        _navigateToSelectedMovie.value = movie
+    }
 
-    // VIEW CONTENT
-
+    /**
+     * After the navigation has taken place, make sure navigateToSelectedMovie is set to null
+     */
+    fun displayMovieDetailsComplete() {
+        _navigateToSelectedMovie.value = null
+    }
 }
 
 class MovieDetailViewModelFactory(

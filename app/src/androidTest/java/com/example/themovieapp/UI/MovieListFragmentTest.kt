@@ -14,9 +14,9 @@ import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
-import com.example.themovieapp.ManagedCoroutineScope
+import com.example.themovieapp.utils.ManagedCoroutineScope
 import com.example.themovieapp.R
-import com.example.themovieapp.TestScope
+import com.example.themovieapp.utils.TestScope
 import com.example.themovieapp.search.MovieListFragment
 import com.example.themovieapp.search.MovieListFragmentDirections
 import kotlinx.coroutines.Dispatchers
@@ -41,7 +41,8 @@ class MovieListFragmentTest {
     lateinit var context: Context
 
     private val testDispatcher = TestCoroutineDispatcher()
-    private val managedCoroutineScope: ManagedCoroutineScope = TestScope(testDispatcher)
+    private val managedCoroutineScope: ManagedCoroutineScope =
+        TestScope(testDispatcher)
 
     @Before
     fun setUp() {

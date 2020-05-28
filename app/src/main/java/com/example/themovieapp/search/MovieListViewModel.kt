@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.themovieapp.ManagedCoroutineScope
+import com.example.themovieapp.utils.ManagedCoroutineScope
 import com.example.themovieapp.db.asDomainModel
 import com.example.themovieapp.db.getDatabase
 import com.example.themovieapp.domain.Movie

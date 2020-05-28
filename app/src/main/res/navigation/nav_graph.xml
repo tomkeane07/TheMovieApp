@@ -20,7 +20,7 @@
     <fragment
         android:id="@+id/about_App"
         android:name="com.example.themovieapp.about.AboutFragment"
-        android:label="about us"></fragment>
+        android:label="about us"/>
 
     <fragment
         android:id="@+id/movieSearch"
@@ -43,6 +43,9 @@
         <argument
             android:name="selectedMovie"
             app:argType="com.example.themovieapp.domain.Movie" />
+        <action
+            android:id="@+id/action_movieDetailFragment_self"
+            app:destination="@id/movieDetailFragment" />
     </fragment>
 
 </navigation>
