@@ -1,12 +1,13 @@
 package com.example.themovieapp.db
 
 import android.content.Context
+import androidx.lifecycle.LiveData
 import androidx.room.*
 
 @Dao
 interface MovieDao {
     @Query("select * from databasemovie")
-    suspend fun getMovies(): List<DatabaseMovie>
+    fun getMovies(): LiveData<List<DatabaseMovie>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(movies: List<DatabaseMovie>)

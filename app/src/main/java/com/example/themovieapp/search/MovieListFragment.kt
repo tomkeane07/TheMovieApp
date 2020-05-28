@@ -4,15 +4,23 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.Nullable
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.themovieapp.utils.LifecycleManagedCoroutineScope
 import com.example.themovieapp.R
 import com.example.themovieapp.databinding.FragmentMovieListBinding
+import com.example.themovieapp.db.DatabaseMovie
+import com.example.themovieapp.db.asDomainModel
 import com.example.themovieapp.domain.Movie
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import timber.log.Timber
 
 
 class MovieListFragment : Fragment() {
@@ -24,7 +32,6 @@ class MovieListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         val application = requireNotNull(activity).application
         val viewModel = ViewModelProviders.of(
             this,
