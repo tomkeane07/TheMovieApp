@@ -25,7 +25,6 @@ import com.example.themovieapp.search.MovieListAdapter
 @BindingAdapter("listData")
 fun bindRecyclerView(recyclerView: RecyclerView, data: List<Movie>?) {
     val adapter = recyclerView.adapter as MovieListAdapter
-    //Log.d("listData binding", "${data}")
     adapter.submitList(data)
 }
 

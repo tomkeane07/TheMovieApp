@@ -63,10 +63,11 @@ class MovieListAdapter(val clickListener: MovieClickListener) :
 
 
     override fun onBindViewHolder(
-        holder: MovieListViewHolder, position: Int) {
+        holder: MovieListViewHolder, position: Int
+    ) {
 
         val movie = getItem(position)
-        holder.itemView.setOnClickListener{
+        holder.itemView.setOnClickListener {
             clickListener.onClick(movie)
         }
         holder.bind(clickListener, movie)
@@ -85,3 +86,15 @@ class MovieListAdapter(val clickListener: MovieClickListener) :
 class MovieClickListener(val clickListener: (movie: Movie) -> Unit) {
     fun onClick(movie: Movie) = clickListener(movie)
 }
+
+/*
+val recyclerView = findViewById(R.id.myView)
+recyclerView.getViewTreeObserver()
+.addOnGlobalLayoutListener(object:ViewTreeObserver.OnGlobalLayoutListener() {
+    fun onGlobalLayout() {
+        //At this point the layout is complete and the
+        //dimensions of recyclerView and any child views are known.
+        //Remove listener after changed RecyclerView's height to prevent infinite loop
+        recyclerView.getViewTreeObserver().removeOnGlobalLayoutListener(this)
+    }
+})*/

@@ -25,7 +25,7 @@
 
 
         <ImageView
-            android:id="@+id/movie_poster"
+            android:id="@+id/list_movie_poster"
             android:layout_width="50dp"
             android:layout_height="75dp"
             android:layout_marginStart="16dp"
@@ -40,7 +40,7 @@
             tools:srcCompat="@drawable/logo" />
 
         <TextView
-            android:id="@+id/movie_title"
+            android:id="@+id/list_movie_title"
             android:layout_width="240dp"
             android:layout_height="0dp"
             android:layout_marginStart="@dimen/spacing_normal"
@@ -48,23 +48,23 @@
             android:foregroundGravity="center_vertical"
             android:gravity="center_horizontal|center_vertical"
             android:text="@{movie.title}"
-            app:layout_constraintBottom_toBottomOf="@+id/movie_poster"
-            app:layout_constraintStart_toEndOf="@+id/movie_poster"
-            app:layout_constraintTop_toTopOf="@+id/movie_poster"
+            app:layout_constraintBottom_toBottomOf="@+id/list_movie_poster"
+            app:layout_constraintStart_toEndOf="@+id/list_movie_poster"
+            app:layout_constraintTop_toTopOf="@+id/list_movie_poster"
             app:layout_constraintVertical_chainStyle="packed"
             tools:text="sample Text" />
 
         <TextView
-            android:id="@+id/movie_vote_average"
+            android:id="@+id/list_movie_average"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="2dip"
             android:gravity="center_horizontal|center_vertical"
             app:averageRating="@{movie.vote_average}"
-            app:layout_constraintBottom_toBottomOf="@+id/movie_poster"
+            app:layout_constraintBottom_toBottomOf="@+id/list_movie_poster"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/movie_title"
-            app:layout_constraintTop_toTopOf="@+id/movie_poster"
+            app:layout_constraintStart_toEndOf="@+id/list_movie_title"
+            app:layout_constraintTop_toTopOf="@+id/list_movie_poster"
             tools:text="8.0"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -10,11 +10,11 @@ open class MovieAppApplication: Application() {
     override fun onCreate() {
         super.onCreate()
         Timber.plant(Timber.DebugTree())
-        if (BuildConfig.DEBUG) {
-            if (!isUnitTesting()) {
-                Stetho.initializeWithDefaults(this)
-            }
-        }
+//        if (BuildConfig.DEBUG) {
+//            if (!isUnitTesting()) {
+//                Stetho.initializeWithDefaults(this)
+//            }
+//        }
     }
 
     protected open fun  isUnitTesting(): Boolean{

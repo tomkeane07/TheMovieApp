@@ -9,7 +9,9 @@ import com.example.themovieapp.db.getDatabase
 import com.example.themovieapp.domain.Movie
 import com.example.themovieapp.repository.MoviesRepository
 import com.example.themovieapp.utils.ManagedCoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.withContext
 import java.io.IOException
 
 enum class MovieApiStatus { LOADING, ERROR, DONE }
@@ -19,16 +21,6 @@ class MovieListViewModel(
     val application: Application
 ) : ViewModel() {
     var pageCount = 1
-
-//    private val _movieList = MutableLiveData<List<Movie>>()
-//    val movieList: LiveData<List<Movie>>
-//        get() = _movieList
-
-    //movies received from repo(max of 60)
-    lateinit var repoMovies: List<Movie>
-
-    //add more from web
-    lateinit var webMovies: List<Movie>
 
     private val _status = MutableLiveData<MovieApiStatus>()
     val status: LiveData<MovieApiStatus>
@@ -43,7 +35,11 @@ class MovieListViewModel(
      */
     val db = getDatabase(application.applicationContext)
 
-    private val moviesRepository = MoviesRepository(coroutineScope, db)
+    private val moviesRepository = MoviesRepository(db)
+
+//    private val _movieList = MutableLiveData<List<Movie>>()
+//    val movieList: LiveData<List<Movie>>
+//        get() = _movieList
 
     val movieList = moviesRepository.movies
 
@@ -83,7 +79,7 @@ class MovieListViewModel(
                 _status.value = MovieApiStatus.LOADING
                 moviesRepository.refreshMovies(pageNumber)
                 _status.value = MovieApiStatus.DONE
-                pageCount = movieList.value?.size?.div(20)!! + 1
+                //pageCount = movieList.value?.size?.div(20)!! + 1
             } catch (networkError: IOException) {
                 _status.value = MovieApiStatus.ERROR
             }
@@ -92,7 +88,11 @@ class MovieListViewModel(
 
 
     fun onLoadMoreMoviesClicked() {
+        if(!movieList.value.isNullOrEmpty()){
+            pageCount = movieList.value!!.size/20 + 1
+        }
         getMovies()
+        pageCount.inc()
     }
 
     fun clearDB() = coroutineScope.launch {

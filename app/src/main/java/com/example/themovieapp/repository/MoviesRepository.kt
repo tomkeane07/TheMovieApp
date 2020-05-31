@@ -24,14 +24,12 @@ import kotlin.coroutines.coroutineContext
  * Repository for fetching movies from the network and storing them on disk
  */
 class MoviesRepository(
-    coroutineScope: ManagedCoroutineScope,
     private val database: MoviesDatabase
 ) {
-    val movies: LiveData<List<Movie>> = Transformations.map(database.movieDao.getMovies()) {
-        it.asDomainModel().sortedByDescending {
-            it.vote_average
+    val movies: LiveData<List<Movie>> =
+        Transformations.map(database.movieDao.getMovies()) {
+            it.asDomainModel()
         }
-    }
 
     suspend fun refreshMovies(pageNumber: Int) = withContext(Dispatchers.IO) {
         val netResObject =

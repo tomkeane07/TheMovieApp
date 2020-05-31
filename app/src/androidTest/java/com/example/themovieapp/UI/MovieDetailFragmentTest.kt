@@ -20,6 +20,7 @@ import com.example.themovieapp.domain.Movie
 import com.example.themovieapp.movieDetails.MovieDetailFragment
 import org.hamcrest.Description
 import org.hamcrest.Matcher
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -37,6 +38,11 @@ class MovieDetailFragmentContentTest {
     fun setUp() {
         movie = setMovieSample(9.0)
         genericDetailTestSetup(movie)
+    }
+
+    @After
+    fun close(){
+
     }
 
     @Test

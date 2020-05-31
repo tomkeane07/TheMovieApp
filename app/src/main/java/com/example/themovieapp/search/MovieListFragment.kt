@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import androidx.annotation.Nullable
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -12,6 +13,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.themovieapp.utils.LifecycleManagedCoroutineScope
 import com.example.themovieapp.R
 import com.example.themovieapp.databinding.FragmentMovieListBinding
@@ -85,6 +87,18 @@ class MovieListFragment : Fragment() {
                 }
             }
         )
+
+
+/*        val recyclerView: RecyclerView = getView()?.findViewById(R.id.movie_list) as RecyclerView
+        recyclerView.getViewTreeObserver()
+            .addOnGlobalLayoutListener(object: ViewTreeObserver.OnGlobalLayoutListener() {
+                override fun onGlobalLayout() {
+                    //At this point the layout is complete and the
+                    //dimensions of recyclerView and any child views are known.
+                    //Remove listener after changed RecyclerView's height to prevent infinite loop
+
+                }
+            })*/
 
         setHasOptionsMenu(true)
         return binding.root

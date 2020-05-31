@@ -6,11 +6,11 @@ import androidx.room.*
 
 @Dao
 interface MovieDao {
-    @Query("select * from databasemovie")
+    @Query("select * from databasemovie order by vote_average desc")
     fun getMovies(): LiveData<List<DatabaseMovie>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(movies: List<DatabaseMovie>)
+    fun insertAll(movies: List<DatabaseMovie>)
 
     @Query("delete from databasemovie")
     suspend fun deleteAll()

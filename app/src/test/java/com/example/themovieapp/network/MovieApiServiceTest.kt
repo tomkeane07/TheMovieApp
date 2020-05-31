@@ -13,6 +13,9 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import timber.log.Timber
 import java.net.HttpURLConnection
 
+/*
+https://stackoverflow.com/questions/61636331/testing-a-retrofit-moshi-apiservice-which-returns-a-deferred-object
+*/
 class MovieApiServiceTest {
     private var mockWebServer = MockWebServer()
 
@@ -47,7 +50,9 @@ class MovieApiServiceTest {
                     "page":0,
                     "total_results":1,
                     "total_pages":1,
-                    "results": [{"id": "movie_id", "title": "movie_title", "vote_average": 9.0, "poster_path": "movie_poster_path", "overview": "overview", "adult": false, "release_date": "release_date" }]
+                    "results": [{"id": "movie_id", "title": "movie_title", "vote_average": 9.0,
+                     "poster_path": "movie_poster_path", "overview": "overview", "adult": false,
+                      "release_date": "release_date" }]
                 }"""
                 )
         )

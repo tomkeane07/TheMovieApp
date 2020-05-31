@@ -10,6 +10,5 @@ object DatabaseTestUtils {
             ApplicationProvider.getApplicationContext(),
             MoviesDatabase::class.java,
             MoviesDatabase.DATABASE_NAME
-        )
-            .build()
+        ).build()
 }
