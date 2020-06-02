@@ -16,11 +16,16 @@ interface MovieDao {
     suspend fun deleteAll()
 }
 
-@Database(entities = [DatabaseMovie::class], version = 1)
+@Database(
+    version = 1,
+    entities = [DatabaseMovie::class]
+//add favorites entity
+)
 abstract class MoviesDatabase : RoomDatabase() {
     companion object {
         const val DATABASE_NAME = "movies_database"
     }
+
     abstract val movieDao: MovieDao
 }
 

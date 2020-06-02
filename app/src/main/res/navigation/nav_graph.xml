@@ -20,13 +20,12 @@
     <fragment
         android:id="@+id/about_App"
         android:name="com.example.themovieapp.about.AboutFragment"
-        android:label="about us"/>
+        android:label="about us" />
 
     <fragment
         android:id="@+id/movieSearch"
         android:name="com.example.themovieapp.search.MovieListFragment"
         android:label="movie Search">
-
         <action
             android:id="@+id/action_movieListFragment_to_MovieDetailFragment"
             app:destination="@id/movieDetailFragment" />

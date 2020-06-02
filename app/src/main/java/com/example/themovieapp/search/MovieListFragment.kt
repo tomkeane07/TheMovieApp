@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import androidx.annotation.Nullable
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
@@ -68,9 +69,9 @@ class MovieListFragment : Fragment() {
         viewModel.navigateToSelectedMovie.observe(viewLifecycleOwner, Observer {
             if (null != it) {
                 // Must find the NavController from the Fragment
-                this.findNavController().navigate(
-                    MovieListFragmentDirections
-                        .actionMovieListFragmentToMovieDetailFragment(it)
+                findNavController().navigate(
+                    R.id.action_movieListFragment_to_MovieDetailFragment,
+                    bundleOf("selectedMovie" to it)
                 )
                 // Tell the ViewModel we've made the navigate call to prevent multiple navigation
                 viewModel.displayMovieDetailsComplete()

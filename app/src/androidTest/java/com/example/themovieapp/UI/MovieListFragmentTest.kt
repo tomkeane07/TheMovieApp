@@ -1,54 +1,70 @@
 package com.example.themovieapp.UI
 
+import android.app.PendingIntent.getActivity
 import android.content.Context
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import android.os.SystemClock.sleep
+import android.view.View
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
-import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.testing.TestNavHostController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.NoMatchingViewException
+import androidx.test.espresso.ViewAssertion
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.contrib.RecyclerViewActions
+import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
-import com.example.themovieapp.utils.ManagedCoroutineScope
 import com.example.themovieapp.R
-import com.example.themovieapp.utils.TestScope
 import com.example.themovieapp.search.MovieListFragment
-import com.example.themovieapp.search.MovieListFragmentDirections
+import com.example.themovieapp.utils.ManagedCoroutineScope
+import com.example.themovieapp.utils.TestScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.resetMain
+import org.hamcrest.CoreMatchers
+import org.hamcrest.CoreMatchers.`is`
 import org.junit.After
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito
 
 @RunWith(AndroidJUnit4::class)
 @ExperimentalCoroutinesApi
 @SmallTest
 class MovieListFragmentTest {
 
-    @get:Rule
-    var instantExecutorRule = InstantTaskExecutorRule()
+
     lateinit var scenario: FragmentScenario<MovieListFragment>
     lateinit var context: Context
+    lateinit var navController: TestNavHostController
 
     private val testDispatcher = TestCoroutineDispatcher()
-    private val managedCoroutineScope: ManagedCoroutineScope =
+    private val testScope: ManagedCoroutineScope =
         TestScope(testDispatcher)
 
     @Before
     fun setUp() {
-        managedCoroutineScope.launch {
+        runBlocking {
             scenario = launchFragmentInContainer<MovieListFragment>()
-            context = ApplicationProvider.getApplicationContext<Context>()
+            context = ApplicationProvider.getApplicationContext()
+
+        }
+
+        navController = TestNavHostController(context)
+        navController.setGraph(R.navigation.nav_graph)
+        navController.setCurrentDestination(R.id.movieSearch)
+
+
+        // Set the NavController property on the fragment
+        scenario.onFragment { fragment ->
+            Navigation.setViewNavController(fragment.requireView(), navController)
         }
     }
 
@@ -59,51 +75,47 @@ class MovieListFragmentTest {
         testDispatcher.cleanupTestCoroutines()
     }
 
-/* returning true every time
-    @Test
-    fun recyclerViewCountTest() {
-        managedCoroutineScope.launch {
-            val db = getDatabase(context)
-            val initSize = db.movieDao.getMovies().size
-
-            onView(withId(R.id.load_more_button))
-                .check(RecyclerViewItemCountAssertion(initSize + 20))
-
-//            simulate button press and test again
-            onView(withId(R.id.load_more_button)).perform(click())
-                .check(RecyclerViewItemCountAssertion(initSize + 20))
-        }
-    }
-*/
 
     @Test
     fun navToMovieDetailTest() {
-        managedCoroutineScope.launch {
-            val mockNavController = Mockito.mock(NavController::class.java)
-            scenario.onFragment { fragment ->
-                Navigation.setViewNavController(fragment.requireView(), mockNavController)
-            }
-
-
-            onView(withId(R.id.movie_list))
-                .perform(
-                    RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                        1, click()
-                    )
+        //got sick of playing with coroutines so the movie_list can load.. sleep is insurance policy
+        sleep(1000)
+        onView(withId(R.id.movie_list))
+            .perform(
+                RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                    0, click()
                 )
-            scenario.onFragment { fragment ->
-                Mockito.verify(mockNavController)
-                    .navigate(
-                        MovieListFragmentDirections
-                            .actionMovieListFragmentToMovieDetailFragment(fragment.selectedMovie)
-                    )
-            }
-        }
+            )
+
+        assertThat(
+            navController.currentDestination?.id,
+            CoreMatchers.equalTo(R.id.movieDetailFragment)
+        )
     }
-    //TODO - some nav-back tests
+
+
+
+    //returning true every time.. probably better to test non-instrumentally
+/*    @Test
+    fun recyclerViewCountTest(){
+        val recyclerView = scenario.findViewById(R.id.movie_list)
+        val dbCount = getDatabase(context).movieDao.getMovies().getOrAwaitValue().size
+        onView(withId(R.id.movie_list))
+            .check(RecyclerViewItemCountAssertion(dbCount))
+
+
+//            simulate button press, interacts with real app db
+        onView(withId(R.id.load_more_button)).perform(click())
+
+        onView(withId(R.id.movie_list))
+            .check(RecyclerViewItemCountAssertion(dbCount + 20))
+    }*/
+
 }
 
-/*
+
+//TODO - some nav-back tests
+
 class RecyclerViewItemCountAssertion(private val expectedCount: Int) : ViewAssertion {
     override fun check(view: View, noViewFoundException: NoMatchingViewException?) {
         if (noViewFoundException != null) {
@@ -113,5 +125,4 @@ class RecyclerViewItemCountAssertion(private val expectedCount: Int) : ViewAsser
         val adapter = recyclerView.adapter
         assertThat(adapter!!.itemCount, `is`(expectedCount))
     }
-
-}*/
+}

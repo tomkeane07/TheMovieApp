@@ -1,4 +1,4 @@
-package com.example.themovieapp.testUtils
+package com.example.themovieapp.androidTestUtils
 
 import com.example.themovieapp.db.DatabaseMovie
 import com.example.themovieapp.domain.Movie
@@ -18,7 +18,7 @@ object SampleMovie {
     )
 
     fun get(): Movie {
-        return this.movie
+        return movie
     }
     fun setVoteAvg(avg: Double){
         movie = Movie(
@@ -37,13 +37,13 @@ object SampleMovie {
 
     fun asDatabaseMovie(): DatabaseMovie {
             return DatabaseMovie(
-                id = this.movie.id,
-                title = this.movie.title,
-                vote_average = this.movie.vote_average,
-                poster_path = this.movie.poster_path,
-                overview = this.movie.overview,
-                adult = this.movie.adult,
-                release_date = this.movie.release_date
+                id = movie.id,
+                title = movie.title,
+                vote_average = movie.vote_average,
+                poster_path = movie.poster_path,
+                overview = movie.overview,
+                adult = movie.adult,
+                release_date = movie.release_date
             )
     }
 }

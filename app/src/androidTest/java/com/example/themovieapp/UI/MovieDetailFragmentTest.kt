@@ -2,6 +2,7 @@ package com.example.themovieapp.UI
 
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
+import android.os.SystemClock.sleep
 import android.view.View
 import android.widget.TextView
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
@@ -9,17 +10,28 @@ import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
+import androidx.navigation.Navigation
+import androidx.navigation.testing.TestNavHostController
+import androidx.recyclerview.widget.RecyclerView
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.BoundedMatcher
+import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.internal.util.Checks
 import com.example.themovieapp.R
 import com.example.themovieapp.domain.Movie
 import com.example.themovieapp.movieDetails.MovieDetailFragment
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runBlockingTest
+import org.hamcrest.CoreMatchers
 import org.hamcrest.Description
 import org.hamcrest.Matcher
+import org.jetbrains.annotations.Async
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -33,6 +45,8 @@ class MovieDetailFragmentContentTest {
 
     lateinit var movie: Movie
     lateinit var scenario: FragmentScenario<MovieDetailFragment>
+    lateinit var navController: TestNavHostController
+
 
     @Before
     fun setUp() {
@@ -41,7 +55,7 @@ class MovieDetailFragmentContentTest {
     }
 
     @After
-    fun close(){
+    fun close() {
 
     }
 
@@ -121,6 +135,33 @@ class MovieDetailFragmentContentTest {
         }
     }
 
+    @Test
+    fun navToRecommendedMovieTest() {
+        sleep(1000)
+        //Setup
+        navController = TestNavHostController(ApplicationProvider.getApplicationContext())
+        navController.setGraph(R.navigation.nav_graph)
+        navController.setCurrentDestination(R.id.movieDetailFragment)
+
+        // Set the NavController property on the fragment
+        scenario.onFragment { fragment ->
+            Navigation.setViewNavController(fragment.requireView(), navController)
+        }
+
+        //Test
+        onView(withId(R.id.movie_list))
+            .perform(
+                RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                    2, ViewActions.click()
+                )
+            )
+
+        ViewMatchers.assertThat(
+            navController.currentDestination?.id,
+            CoreMatchers.equalTo(R.id.movieDetailFragment)
+        )
+    }
+
 
     fun setMovieSample(vote_average: Double): Movie {
         return Movie(
@@ -147,9 +188,13 @@ class MovieDetailFragmentContentTest {
             )
         }
 
-        scenario = launchFragmentInContainer<MovieDetailFragment>(
-            fragmentArgs
-        )
+
+        runBlocking {
+            scenario = launchFragmentInContainer<MovieDetailFragment>(
+                fragmentArgs
+            )
+        }
+
     }
 
     fun withBackgroundColor(expectedColor: Int?): Matcher<View?>? {

@@ -79,7 +79,6 @@ class MovieListViewModel(
                 _status.value = MovieApiStatus.LOADING
                 moviesRepository.refreshMovies(pageNumber)
                 _status.value = MovieApiStatus.DONE
-                //pageCount = movieList.value?.size?.div(20)!! + 1
             } catch (networkError: IOException) {
                 _status.value = MovieApiStatus.ERROR
             }
@@ -88,8 +87,8 @@ class MovieListViewModel(
 
 
     fun onLoadMoreMoviesClicked() {
-        if(!movieList.value.isNullOrEmpty()){
-            pageCount = movieList.value!!.size/20 + 1
+        if (!movieList.value.isNullOrEmpty()) {
+            pageCount = movieList.value!!.size / 20 + 1
         }
         getMovies()
         pageCount.inc()

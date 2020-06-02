@@ -15,8 +15,8 @@ import kotlinx.android.parcel.Parcelize
 /**
  * DatabaseMovie represents a video entity in the database.
  */
-@Entity
 @Parcelize
+@Entity
 data class DatabaseMovie constructor(
     @PrimaryKey
     val id: String,
