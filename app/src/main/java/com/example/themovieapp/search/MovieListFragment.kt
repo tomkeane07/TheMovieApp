@@ -21,6 +21,7 @@ import com.example.themovieapp.databinding.FragmentMovieListBinding
 import com.example.themovieapp.db.DatabaseMovie
 import com.example.themovieapp.db.asDomainModel
 import com.example.themovieapp.domain.Movie
+import kotlinx.android.synthetic.main.movie_detail_fragment.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import timber.log.Timber
@@ -88,6 +89,20 @@ class MovieListFragment : Fragment() {
                 }
             }
         )
+
+        binding.movieList.layoutManager =
+            object : LinearLayoutManager(getActivity(), VERTICAL, false) {
+                override fun onLayoutCompleted(state: RecyclerView.State) {
+                    super.onLayoutCompleted(state)
+                    val lastVisibleItemPosition = findLastVisibleItemPosition()
+                    val count = (binding.movieList.adapter as MovieListAdapter).itemCount
+                    if (!viewModel.atStart) {
+                        //speed the scroll up a bit, but still looks nice
+                        binding.movieList.scrollToPosition(count - 5)
+                        binding.movieList.smoothScrollToPosition(count)
+                    }
+                }
+            }
 
 
 /*        val recyclerView: RecyclerView = getView()?.findViewById(R.id.movie_list) as RecyclerView

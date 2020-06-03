@@ -30,6 +30,9 @@ class MovieListViewModel(
     val dbEmpty: LiveData<Boolean>
         get() = _dbEmpty
 
+    //helps decide scroll logic
+    var atStart: Boolean = true
+
     /**
      * The data source this ViewModel will fetch results from.
      */
@@ -87,6 +90,7 @@ class MovieListViewModel(
 
 
     fun onLoadMoreMoviesClicked() {
+        atStart = false
         if (!movieList.value.isNullOrEmpty()) {
             pageCount = movieList.value!!.size / 20 + 1
         }

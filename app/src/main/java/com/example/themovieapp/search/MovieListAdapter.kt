@@ -1,8 +1,11 @@
 package com.example.themovieapp.search
 
+import android.app.PendingIntent.getActivity
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.themovieapp.databinding.MovieListItemBinding
@@ -15,6 +18,9 @@ import com.example.themovieapp.domain.Movie
  */
 class MovieListAdapter(val clickListener: MovieClickListener) :
     ListAdapter<Movie, MovieListAdapter.MovieListViewHolder>(DiffCallback) {
+
+
+
 
     /**
      * Allows the RecyclerView to determine which items have changed when the [List]
@@ -32,6 +38,7 @@ class MovieListAdapter(val clickListener: MovieClickListener) :
             return oldItem.id == newItem.id
         }
     }
+
 
 
     /**
@@ -98,3 +105,5 @@ recyclerView.getViewTreeObserver()
         recyclerView.getViewTreeObserver().removeOnGlobalLayoutListener(this)
     }
 })*/
+
+
