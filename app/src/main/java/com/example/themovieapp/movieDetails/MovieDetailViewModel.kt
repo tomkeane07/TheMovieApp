@@ -81,14 +81,6 @@ class MovieDetailViewModel(
         _viewRecommendations.value = !viewRecommendations.value!!
     }
 
-/*    fun rateMovieClick(){
-        coroutineScope.launch{
-            val accessToken = MovieApi.retrofitService.getAccessToken()
-
-
-
-        }
-    }*/
 }
 
 class MovieDetailViewModelFactory(

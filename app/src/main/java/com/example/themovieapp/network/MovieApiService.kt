@@ -43,10 +43,6 @@ interface MovieApiService{
         @Query("page") page: Int = 1
         ): Deferred<NetworkResponseObject>
 
-    @GET("/authentication/token/new")
-    fun getAccessToken(
-        @Query("api_key") apiKey: String = API_key
-    ): Deferred<RequestTokenResponseObject>
 }
 
 

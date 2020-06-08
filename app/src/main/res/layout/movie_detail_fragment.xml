@@ -94,25 +94,15 @@
                 app:layout_constraintTop_toBottomOf="@id/movie_title"
                 tools:text="@string/sample_overview" />
 
-            <Button
-                android:id="@+id/rate_movie_btn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="@{() -> viewModel.rateMovieClick()}"
-                android:text="@string/rate_movie"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/movie_overview" />
 
             <Button
-                android:id="@+id/see_recommendations_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="@{() -> viewModel.recommendationClick()}"
                 android:text="@string/recommendations"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rate_movie_btn" />
+                app:layout_constraintTop_toBottomOf="@id/movie_overview" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
