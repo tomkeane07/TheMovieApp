@@ -50,9 +50,9 @@ class MovieDetailFragment : Fragment() {
 
         binding.viewModel = viewModel
 
-        binding.movieList.adapter = MovieListAdapter(MovieClickListener { movie ->
-            viewModel.displayMovieDetails(movie)
-            selectedMovie = movie
+        binding.movieList.adapter = MovieListAdapter(MovieClickListener { clickedMovie ->
+            viewModel.displayMovieDetails(clickedMovie)
+            selectedMovie = clickedMovie
         })
 
         // Observe the navigateToSelectedProperty LiveData and Navigate when it isn't null
@@ -69,20 +69,19 @@ class MovieDetailFragment : Fragment() {
                 viewModel.displayMovieDetailsComplete()
             }
         })
-//        movie_overview.setOnClickListener {
-//            expandTextView(it as TextView)
-//        }
+
+        viewModel.viewRecommendations.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                Details.visibility = View.GONE
+                Recommendations.visibility = View.VISIBLE
+                detailBtn.setText(movie.title.capitalize())
+            } else {
+                Details.visibility = View.VISIBLE
+                Recommendations.visibility = View.GONE
+            }
+
+        })
 
         return binding.root
     }
-
-//    var overviewExpanded = true
-//    fun expandTextView(view: TextView) {
-//        if (!overviewExpanded) {
-//            view.setMaxLines(Int.MAX_VALUE)
-//        } else {
-//            view.setMaxLines(1)
-//        }
-//        overviewExpanded = !overviewExpanded
-//    }
 }

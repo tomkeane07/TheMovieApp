@@ -14,6 +14,12 @@ data class NetworkResponseObject(
     val total_pages: Int
 )
 
+data class RequestTokenResponseObject(
+    val success: Boolean,
+    val expires_at: String,
+    val request_token: String
+)
+
 
 @JsonClass(generateAdapter = true)
 data class NetworkMovieContainer(val movies: List<NetworkMovie>)

@@ -94,7 +94,7 @@ class MovieListFragment : Fragment() {
             object : LinearLayoutManager(getActivity(), VERTICAL, false) {
                 override fun onLayoutCompleted(state: RecyclerView.State) {
                     super.onLayoutCompleted(state)
-                    val lastVisibleItemPosition = findLastVisibleItemPosition()
+                    findLastVisibleItemPosition()
                     val count = (binding.movieList.adapter as MovieListAdapter).itemCount
                     if (!viewModel.atStart) {
                         //speed the scroll up a bit, but still looks nice

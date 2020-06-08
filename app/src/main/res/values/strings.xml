@@ -1,7 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">The Movie App</string>
     <string name="seeMoviesButton">look up top movies</string>
-    <string name="todo">TODO</string>
     <string name="waiting_for_location_and_network">Waiting for location and network result.\n\n If running on an         emulator open the Maps app to enable location services.</string>
     <string name="load_more_movies">Load more movies</string>
     <string name="clear_movie_list">clear movie list</string>
@@ -11,6 +10,10 @@
         blah blah blah
     </string>
     <string name="sample_overview">the best film ever. the best film ever. the best film ever. the best film ever. the best film ever. the best film ever. the best film ever. the best film ever. the best film ever. the best film ever. the best film ever. the best film ever. the best film ever. the best film ever. the best film ever. the best film ever. the best film ever. the best film ever. the best film ever. the best film ever. the best film ever. the best film ever. the best film ever. the best film ever.</string>
+    <string name="recommendations">RECOMMENDATIONS</string>
+    <string name="details">DETAILS</string>
+    <string name="todo">TODO</string>
+    <string name="rate_movie">RATE MOVIE</string>
 
 
 </resources>

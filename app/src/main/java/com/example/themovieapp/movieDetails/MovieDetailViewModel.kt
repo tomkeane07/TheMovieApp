@@ -6,6 +6,7 @@ import androidx.lifecycle.*
 import com.example.themovieapp.utils.ManagedCoroutineScope
 import com.example.themovieapp.domain.Movie
 import com.example.themovieapp.network.MovieApi
+import com.example.themovieapp.network.MovieApiService
 import com.example.themovieapp.network.NetworkMovieContainer
 import com.example.themovieapp.network.asDomainModel
 import com.example.themovieapp.search.MovieApiStatus
@@ -39,7 +40,9 @@ class MovieDetailViewModel(
     val navigateToSelectedMovie: LiveData<Movie>
         get() = _navigateToSelectedMovie
 
-
+    private val _viewRecommendations = MutableLiveData<Boolean>(false)
+    val viewRecommendations: LiveData<Boolean>
+        get() = _viewRecommendations
 
     //initialize the _selectedMovie MutableLiveData
     init {
@@ -73,6 +76,19 @@ class MovieDetailViewModel(
     fun displayMovieDetailsComplete() {
         _navigateToSelectedMovie.value = null
     }
+
+    fun recommendationClick(){
+        _viewRecommendations.value = !viewRecommendations.value!!
+    }
+
+/*    fun rateMovieClick(){
+        coroutineScope.launch{
+            val accessToken = MovieApi.retrofitService.getAccessToken()
+
+
+
+        }
+    }*/
 }
 
 class MovieDetailViewModelFactory(

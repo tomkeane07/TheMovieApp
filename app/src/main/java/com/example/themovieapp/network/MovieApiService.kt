@@ -7,6 +7,7 @@ import kotlinx.coroutines.Deferred
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -41,6 +42,11 @@ interface MovieApiService{
         @Query("language") language: String = "en-US",
         @Query("page") page: Int = 1
         ): Deferred<NetworkResponseObject>
+
+    @GET("/authentication/token/new")
+    fun getAccessToken(
+        @Query("api_key") apiKey: String = API_key
+    ): Deferred<RequestTokenResponseObject>
 }
 
 
