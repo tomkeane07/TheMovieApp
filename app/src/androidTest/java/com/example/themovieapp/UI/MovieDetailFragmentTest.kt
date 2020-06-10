@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.BoundedMatcher
@@ -24,14 +25,12 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.internal.util.Checks
 import com.example.themovieapp.R
-import com.example.themovieapp.domain.Movie
-import com.example.themovieapp.movieDetails.MovieDetailFragment
+import com.example.themovieapp.framework.domain.Movie
+import com.example.themovieapp.ui.fragment.MovieDetailFragment
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.runBlockingTest
 import org.hamcrest.CoreMatchers
 import org.hamcrest.Description
 import org.hamcrest.Matcher
-import org.jetbrains.annotations.Async
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -74,6 +73,8 @@ class MovieDetailFragmentContentTest {
 
     @Test
     fun MovieDetailRatingColorTest() {
+        //is movie rating color correct
+
         //for Equivalence Partitions
         val sampleRatings = arrayOf(4.0, 6.0, 7.0, 9.0)
         var expectedColor: Int? = 0
@@ -137,6 +138,7 @@ class MovieDetailFragmentContentTest {
 
     @Test
     fun navToRecommendedMovieTest() {
+
         sleep(1000)
         //Setup
         navController = TestNavHostController(ApplicationProvider.getApplicationContext())
@@ -147,6 +149,9 @@ class MovieDetailFragmentContentTest {
         scenario.onFragment { fragment ->
             Navigation.setViewNavController(fragment.requireView(), navController)
         }
+
+        onView(withId(R.id.see_recommendations_btn))
+            .perform(click())
 
         //Test
         onView(withId(R.id.movie_list))

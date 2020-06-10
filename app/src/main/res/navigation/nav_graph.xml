@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/home"
-        android:name="com.example.themovieapp.home.HomeFragment"
+        android:name="com.example.themovieapp.ui.fragment.HomeFragment"
         android:label="Home"
         tools:layout="@layout/home_fragment">
         <action
@@ -19,13 +19,13 @@
 
     <fragment
         android:id="@+id/about_App"
-        android:name="com.example.themovieapp.about.AboutFragment"
+        android:name="com.example.themovieapp.ui.fragment.AboutFragment"
         android:label="about us" />
 
     <fragment
         android:id="@+id/movieSearch"
-        android:name="com.example.themovieapp.search.MovieListFragment"
-        android:label="movie Search">
+        android:name="com.example.themovieapp.ui.fragment.MovieListFragment"
+        android:label="Top movies search">
         <action
             android:id="@+id/action_movieListFragment_to_MovieDetailFragment"
             app:destination="@id/movieDetailFragment" />
@@ -36,12 +36,12 @@
 
     <fragment
         android:id="@+id/movieDetailFragment"
-        android:name="com.example.themovieapp.movieDetails.MovieDetailFragment"
+        android:name="com.example.themovieapp.ui.fragment.MovieDetailFragment"
         android:label="movie detail"
         tools:layout="@layout/movie_detail_fragment">
         <argument
             android:name="selectedMovie"
-            app:argType="com.example.themovieapp.domain.Movie" />
+            app:argType="com.example.themovieapp.framework.domain.Movie" />
         <action
             android:id="@+id/action_movieDetailFragment_self"
             app:destination="@id/movieDetailFragment" />

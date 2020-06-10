@@ -1,6 +1,5 @@
 package com.example.themovieapp.UI
 
-import android.app.PendingIntent.getActivity
 import android.content.Context
 import android.os.SystemClock.sleep
 import android.view.View
@@ -20,7 +19,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.example.themovieapp.R
-import com.example.themovieapp.search.MovieListFragment
+import com.example.themovieapp.ui.fragment.MovieListFragment
 import com.example.themovieapp.utils.ManagedCoroutineScope
 import com.example.themovieapp.utils.TestScope
 import kotlinx.coroutines.Dispatchers

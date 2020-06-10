@@ -3,7 +3,6 @@ package com.example.themovieapp.UI;
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
-import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.testing.TestNavHostController
 import androidx.test.core.app.ApplicationProvider
@@ -13,8 +12,8 @@ import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.themovieapp.R
-import com.example.themovieapp.home.HomeFragment
-import com.example.themovieapp.home.HomeViewModel
+import com.example.themovieapp.ui.fragment.HomeFragment
+import com.example.themovieapp.ui.view.HomeViewModel
 import com.example.themovieapp.utils.ManagedCoroutineScope
 import com.example.themovieapp.utils.TestScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -24,9 +23,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito
-import org.mockito.Mockito.mock
-import org.mockito.Mockito.verify
 
 @ExperimentalCoroutinesApi
 @RunWith(AndroidJUnit4::class)

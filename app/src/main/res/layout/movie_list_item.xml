@@ -9,11 +9,11 @@
 
         <variable
             name="clickListener"
-            type="com.example.themovieapp.search.MovieClickListener" />
+            type="com.example.themovieapp.utils.MovieClickListener" />
 
         <variable
             name="movie"
-            type="com.example.themovieapp.domain.Movie" />
+            type="com.example.themovieapp.framework.domain.Movie" />
 
     </data>
 
@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="@{() -> clickListener.onClick(movie)}"
-        tools:context="com.example.themovieapp.search.MovieListFragment">
+        tools:context="com.example.themovieapp.ui.fragment.MovieListFragment">
 
 
         <ImageView

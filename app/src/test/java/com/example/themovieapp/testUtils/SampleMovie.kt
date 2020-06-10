@@ -1,4 +1,4 @@
-package com.example.themovieapp.androidTestUtils
+package com.example.themovieapp.testUtils
 
 import com.example.themovieapp.framework.db.DatabaseMovie
 import com.example.themovieapp.framework.domain.Movie

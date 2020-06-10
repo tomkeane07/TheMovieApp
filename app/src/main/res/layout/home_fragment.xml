@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.themovieapp.home.HomeViewModel" />
+            type="com.example.themovieapp.ui.view.HomeViewModel" />
     </data>
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
