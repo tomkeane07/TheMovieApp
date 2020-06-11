@@ -42,6 +42,13 @@ interface MovieApiService{
         @Query("page") page: Int = 1
         ): Deferred<NetworkResponseObject>
 
+    @GET("search/movie")
+    fun searchByName(
+        @Query("language") language: String = "en-US",
+        @Query("page") page: Int = 1,
+        @Query("api_key") apiKey: String = API_key,
+        @Query("query") query: String
+    ): Deferred<NetworkResponseObject>
 }
 
 

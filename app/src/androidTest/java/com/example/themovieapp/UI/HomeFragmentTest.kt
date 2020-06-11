@@ -1,4 +1,4 @@
-package com.example.themovieapp.UI;
+package com.example.themovieapp.UI
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.fragment.app.testing.FragmentScenario

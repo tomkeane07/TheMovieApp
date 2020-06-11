@@ -207,7 +207,7 @@ class MovieDetailFragmentContentTest {
         return object : BoundedMatcher<View?, TextView>(TextView::class.java) {
             override fun matchesSafely(textView: TextView): Boolean {
 
-                val actualColor = (textView.getBackground() as GradientDrawable).color?.defaultColor
+                val actualColor = (textView.background as GradientDrawable).color?.defaultColor
                 return expectedColor == actualColor
             }
 

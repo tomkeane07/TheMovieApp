@@ -3,7 +3,7 @@ package com.example.themovieapp.testUtils
 import com.example.themovieapp.MovieAppApplication
 
 class TestMovieAppApplication: MovieAppApplication() {
-    protected override fun isUnitTesting(): Boolean {
+    override fun isUnitTesting(): Boolean {
         return true
     }
 }

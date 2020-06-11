@@ -35,7 +35,7 @@ class MovieDetailFragment : Fragment() {
 
         val application = requireNotNull(activity).application
         val binding = MovieDetailFragmentBinding.inflate(inflater)
-        binding.setLifecycleOwner(this)
+        binding.lifecycleOwner = this
 
 
         val movie = MovieDetailFragmentArgs.fromBundle(
@@ -57,30 +57,22 @@ class MovieDetailFragment : Fragment() {
         binding.movieList.adapter =
             MovieListAdapter(MovieClickListener { clickedMovie ->
                 viewModel.displayMovieDetails(clickedMovie)
-                selectedMovie = clickedMovie
-            })
-
-        // Observe the navigateToSelectedProperty LiveData and Navigate when it isn't null
-        // After navigating, call displayPropertyDetailsComplete() so that the ViewModel is ready
-        // for another navigation event.
-        viewModel.navigateToSelectedMovie.observe(viewLifecycleOwner, Observer {
-            if (null != it) {
-                // Must find the NavController from the Fragment
                 this.findNavController().navigate(
                     MovieDetailFragmentDirections.actionMovieDetailFragmentSelf(
-                        it
+                        clickedMovie
                     )
                 )
                 // Tell the ViewModel we've made the navigate call to prevent multiple navigation
                 viewModel.displayMovieDetailsComplete()
-            }
-        })
+                selectedMovie = clickedMovie
+            })
+
 
         viewModel.viewRecommendations.observe(viewLifecycleOwner, Observer {
             if (it) {
                 Details.visibility = View.GONE
                 Recommendations.visibility = View.VISIBLE
-                see_details_btn.setText(movie.title.capitalize())
+                see_details_btn.text = movie.title.capitalize()
             } else {
                 Details.visibility = View.VISIBLE
                 Recommendations.visibility = View.GONE

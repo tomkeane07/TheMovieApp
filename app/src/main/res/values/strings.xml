@@ -13,6 +13,7 @@
     <string name="recommendations">RECOMMENDATIONS</string>
     <string name="details">DETAILS</string>
     <string name="todo">TODO</string>
+    <string name="search_movie_by_name_hint">search movie by name</string>
 
 
 </resources>

@@ -50,7 +50,7 @@ fun bindImage(imgView: ImageView, posterPath: String?) {
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 @BindingAdapter("averageRating")
 fun bindratingBackground(textView: TextView, avgRating: Double?) {
-    textView.setText(avgRating.toString())
+    textView.text = avgRating.toString()
     val color: Int
     if (avgRating != null) {
         textView.setBackgroundResource(R.drawable.rounded_view_with_border)
@@ -79,7 +79,7 @@ fun bindratingBackground(textView: TextView, avgRating: Double?) {
         shape.shape = GradientDrawable.OVAL
         shape.setColor(color)
         shape.setStroke(2, Color.BLACK)
-        textView.setBackground(shape)
+        textView.background = shape
     }
 
 }

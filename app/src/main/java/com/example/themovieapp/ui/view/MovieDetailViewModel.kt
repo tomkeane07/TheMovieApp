@@ -1,4 +1,4 @@
-package com.example.themovieapp.ui.view;
+package com.example.themovieapp.ui.view
 
 import android.app.Application
 import androidx.lifecycle.*

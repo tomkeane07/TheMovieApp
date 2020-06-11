@@ -4,31 +4,74 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.example.themovieapp.ui.view.HomeViewModel" />
     </data>
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/look_up_movies_button"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/look_up_movies_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top|center"
-                android:text="@string/seeMoviesButton"
-                android:onClick="@{()-> viewModel.onSeeMoviesClicked()}"
-                android:scaleType="centerCrop"
-                app:layout_constraintDimensionRatio="4:3"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-        </androidx.appcompat.widget.AppCompatButton>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|center"
+            android:onClick="@{()-> viewModel.onSeeMoviesClicked()}"
+            android:scaleType="centerCrop"
+            android:text="@string/seeMoviesButton"
+            app:layout_constraintDimensionRatio="4:3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        <EditText
+            android:id="@+id/search_by_name_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:gravity="center_horizontal"
+            android:inputType="textPersonName"
+            android:hint="@string/search_movie_by_name_hint"
+            app:layout_constraintEnd_toStartOf="@id/search_by_name_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/look_up_movies_button" />
+
+        <ImageButton
+            android:id="@+id/search_by_name_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="?android:attr/actionModeWebSearchDrawable"
+            android:onClick="@{() -> viewModel.searchByNameClicked()}"
+            app:layout_constraintBottom_toBottomOf="@id/search_by_name_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/search_by_name_text" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/search_by_name_movie_list"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@id/status_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/search_by_name_text"
+            app:listData="@{viewModel.movieList}"
+            tools:listitem="@layout/movie_list_item" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/status_image"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:movieApiStatus="@{viewModel.status}"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
