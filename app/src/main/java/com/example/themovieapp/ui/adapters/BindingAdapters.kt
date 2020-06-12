@@ -1,4 +1,4 @@
-package com.example.themovieapp.utils
+package com.example.themovieapp.ui.adapters
 
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable

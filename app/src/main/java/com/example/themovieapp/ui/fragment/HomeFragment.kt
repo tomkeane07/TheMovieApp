@@ -1,17 +1,12 @@
 package com.example.themovieapp.ui.fragment
 
-import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.ImageButton
 import androidx.core.os.bundleOf
-import androidx.core.widget.addTextChangedListener
-import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -23,8 +18,8 @@ import com.example.themovieapp.framework.domain.Movie
 import com.example.themovieapp.ui.view.HomeViewModel
 import com.example.themovieapp.ui.view.HomeViewModelFactory
 import com.example.themovieapp.utils.LifecycleManagedCoroutineScope
-import com.example.themovieapp.utils.MovieClickListener
-import com.example.themovieapp.utils.MovieListAdapter
+import com.example.themovieapp.ui.adapters.MovieClickListener
+import com.example.themovieapp.ui.adapters.MovieListAdapter
 import kotlinx.android.synthetic.main.home_fragment.*
 
 class HomeFragment : Fragment() {
@@ -52,13 +47,14 @@ class HomeFragment : Fragment() {
         binding.viewModel = viewModel
 
         binding.searchByNameMovieList.adapter =
-            MovieListAdapter(MovieClickListener { clickedMovie ->
-                this.findNavController().navigate(
-                    R.id.action_home_to_movieDetailFragment,
-                    bundleOf("selectedMovie" to clickedMovie)
-                )
-                selectedMovie = clickedMovie
-            })
+            MovieListAdapter(
+                MovieClickListener { clickedMovie ->
+                    this.findNavController().navigate(
+                        R.id.action_home_to_movieDetailFragment,
+                        bundleOf("selectedMovie" to clickedMovie)
+                    )
+                    selectedMovie = clickedMovie
+                })
 
 
         //Observes change in LiveData, then performs navigation
@@ -77,9 +73,22 @@ class HomeFragment : Fragment() {
                 if (search_by_name_text.text.toString().length > 0)
                     viewModel.searchByName(search_by_name_text.text.toString())
             })
-        
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
+        search_by_name_text.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable) {}
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                if (search_by_name_text.text.toString().length > 0)
+                    viewModel.searchByName(search_by_name_text.text.toString())
+            }
+        })
     }
 
 }

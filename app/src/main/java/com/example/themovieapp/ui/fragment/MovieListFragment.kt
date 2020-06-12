@@ -16,8 +16,8 @@ import com.example.themovieapp.utils.LifecycleManagedCoroutineScope
 import com.example.themovieapp.R
 import com.example.themovieapp.databinding.FragmentMovieListBinding
 import com.example.themovieapp.framework.domain.Movie
-import com.example.themovieapp.utils.MovieClickListener
-import com.example.themovieapp.utils.MovieListAdapter
+import com.example.themovieapp.ui.adapters.MovieClickListener
+import com.example.themovieapp.ui.adapters.MovieListAdapter
 import com.example.themovieapp.ui.view.MovieListViewModel
 import com.example.themovieapp.ui.view.MovieListViewModelFactory
 
@@ -55,13 +55,14 @@ class MovieListFragment : Fragment() {
         // Sets the adapter of the RecyclerView with clickHandler lambda that
         // tells the viewModel when our movie is clicked
         binding.movieList.adapter =
-            MovieListAdapter(MovieClickListener { clickedMovie ->
-                findNavController().navigate(
-                    R.id.action_movieListFragment_to_MovieDetailFragment,
-                    bundleOf("selectedMovie" to clickedMovie)
-                )
-                selectedMovie = clickedMovie
-            })
+            MovieListAdapter(
+                MovieClickListener { clickedMovie ->
+                    findNavController().navigate(
+                        R.id.action_movieListFragment_to_MovieDetailFragment,
+                        bundleOf("selectedMovie" to clickedMovie)
+                    )
+                    selectedMovie = clickedMovie
+                })
 
 
         //Observes change in LiveData, then performs navigation

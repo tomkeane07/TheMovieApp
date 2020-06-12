@@ -13,8 +13,8 @@ import com.example.themovieapp.databinding.MovieDetailFragmentBinding
 import com.example.themovieapp.framework.domain.Movie
 import com.example.themovieapp.ui.view.MovieDetailViewModel
 import com.example.themovieapp.ui.view.MovieDetailViewModelFactory
-import com.example.themovieapp.utils.MovieClickListener
-import com.example.themovieapp.utils.MovieListAdapter
+import com.example.themovieapp.ui.adapters.MovieClickListener
+import com.example.themovieapp.ui.adapters.MovieListAdapter
 import com.example.themovieapp.utils.LifecycleManagedCoroutineScope
 import kotlinx.android.synthetic.main.movie_detail_fragment.*
 
@@ -55,14 +55,15 @@ class MovieDetailFragment : Fragment() {
         binding.viewModel = viewModel
 
         binding.movieList.adapter =
-            MovieListAdapter(MovieClickListener { clickedMovie ->
-                this.findNavController().navigate(
-                    MovieDetailFragmentDirections.actionMovieDetailFragmentSelf(
-                        clickedMovie
+            MovieListAdapter(
+                MovieClickListener { clickedMovie ->
+                    this.findNavController().navigate(
+                        MovieDetailFragmentDirections.actionMovieDetailFragmentSelf(
+                            clickedMovie
+                        )
                     )
-                )
-                selectedMovie = clickedMovie
-            })
+                    selectedMovie = clickedMovie
+                })
 
 
         viewModel.viewRecommendations.observe(viewLifecycleOwner, Observer {

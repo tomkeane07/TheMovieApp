@@ -9,7 +9,7 @@
 
         <variable
             name="clickListener"
-            type="com.example.themovieapp.utils.MovieClickListener" />
+            type="com.example.themovieapp.ui.adapters.MovieClickListener" />
 
         <variable
             name="movie"
