@@ -53,14 +53,11 @@ class HomeFragment : Fragment() {
 
         binding.searchByNameMovieList.adapter =
             MovieListAdapter(MovieClickListener { clickedMovie ->
-                viewModel.displayMovieDetails(clickedMovie)
                 this.findNavController().navigate(
                     R.id.action_home_to_movieDetailFragment,
                     bundleOf("selectedMovie" to clickedMovie)
                 )
                 selectedMovie = clickedMovie
-                // Tell the ViewModel we've made the navigate call to prevent multiple navigation
-                viewModel.displayMovieDetailsComplete()
             })
 
 

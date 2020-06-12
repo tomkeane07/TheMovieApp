@@ -56,14 +56,11 @@ class MovieDetailFragment : Fragment() {
 
         binding.movieList.adapter =
             MovieListAdapter(MovieClickListener { clickedMovie ->
-                viewModel.displayMovieDetails(clickedMovie)
                 this.findNavController().navigate(
                     MovieDetailFragmentDirections.actionMovieDetailFragmentSelf(
                         clickedMovie
                     )
                 )
-                // Tell the ViewModel we've made the navigate call to prevent multiple navigation
-                viewModel.displayMovieDetailsComplete()
                 selectedMovie = clickedMovie
             })
 

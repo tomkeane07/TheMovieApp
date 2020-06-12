@@ -27,7 +27,9 @@ fun bindRecyclerView(recyclerView: RecyclerView, data: List<Movie>?) {
     adapter.submitList(data)
 }
 
-
+/*
+* MovieList Items
+* */
 @BindingAdapter("imageUrl")
 fun bindImage(imgView: ImageView, posterPath: String?) {
     val imgUrl = "image.tmdb.org/t/p/w500" + posterPath
@@ -35,7 +37,6 @@ fun bindImage(imgView: ImageView, posterPath: String?) {
 
         val imgUri = imgUrl.toUri()
             .buildUpon().scheme("https").build()
-        //Log.d("imgUri", imgUri.toString())
         Glide.with(imgView.context)
             .load(imgUri)
             .apply(
@@ -56,23 +57,23 @@ fun bindratingBackground(textView: TextView, avgRating: Double?) {
         textView.setBackgroundResource(R.drawable.rounded_view_with_border)
         when {
             5 <= avgRating && avgRating < 6.5 ->
-                
-                    color = ContextCompat.getColor(
-                        textView.context, R.color.ColorRatingMediumLow
-                    )
+
+                color = ContextCompat.getColor(
+                    textView.context, R.color.ColorRatingMediumLow
+                )
             6.5 <= avgRating && avgRating < 8 ->
-                
-                    color = ContextCompat.getColor(
-                        textView.context, R.color.ColorRatingMediumHigh
-                    )
+
+                color = ContextCompat.getColor(
+                    textView.context, R.color.ColorRatingMediumHigh
+                )
             8 <= avgRating ->
-                    color = ContextCompat.getColor(
-                        textView.context, R.color.ColorRatingHigh
-                    )
+                color = ContextCompat.getColor(
+                    textView.context, R.color.ColorRatingHigh
+                )
             else ->
-                    color = ContextCompat.getColor(
-                        textView.context, R.color.ColorRatingLow
-                    )
+                color = ContextCompat.getColor(
+                    textView.context, R.color.ColorRatingLow
+                )
         }
 
         val shape = GradientDrawable()
@@ -84,6 +85,9 @@ fun bindratingBackground(textView: TextView, avgRating: Double?) {
 
 }
 
+/*
+* Top Movies MovieList
+* */
 @BindingAdapter("movieApiStatus")
 fun bindStatus(
     statusImageView: ImageView,

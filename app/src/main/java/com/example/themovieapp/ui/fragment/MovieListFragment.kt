@@ -56,13 +56,10 @@ class MovieListFragment : Fragment() {
         // tells the viewModel when our movie is clicked
         binding.movieList.adapter =
             MovieListAdapter(MovieClickListener { clickedMovie ->
-                viewModel.displayMovieDetails(clickedMovie)
                 findNavController().navigate(
                     R.id.action_movieListFragment_to_MovieDetailFragment,
                     bundleOf("selectedMovie" to clickedMovie)
                 )
-                // Tell the ViewModel we've made the navigate call to prevent multiple navigation
-                viewModel.displayMovieDetailsComplete()
                 selectedMovie = clickedMovie
             })
 
@@ -78,6 +75,7 @@ class MovieListFragment : Fragment() {
             }
         )
 
+        //Scroll to bottom on list update
         binding.movieList.layoutManager =
             object : LinearLayoutManager(activity, VERTICAL, false) {
                 override fun onLayoutCompleted(state: RecyclerView.State) {

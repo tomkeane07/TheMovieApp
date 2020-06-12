@@ -32,10 +32,6 @@ class MovieDetailViewModel(
     val recommendedMovies: LiveData<List<Movie>>
         get() = _recommendedMovies
 
-    // LiveData to handle navigation to the selected movie
-    private val _navigateToSelectedMovie = MutableLiveData<Movie>()
-    val navigateToSelectedMovie: LiveData<Movie>
-        get() = _navigateToSelectedMovie
 
     private val _viewRecommendations = MutableLiveData<Boolean>(false)
     val viewRecommendations: LiveData<Boolean>
@@ -59,20 +55,6 @@ class MovieDetailViewModel(
         }
     }
 
-    /**
-     * When the movie is clicked, set the [_navigateToSelectedMovie] [MutableLiveData]
-     * @param movie The [Movie] that was clicked on.
-     */
-    fun displayMovieDetails(movie: Movie) {
-        _navigateToSelectedMovie.value = movie
-    }
-
-    /**
-     * After the navigation has taken place, make sure navigateToSelectedMovie is set to null
-     */
-    fun displayMovieDetailsComplete() {
-        _navigateToSelectedMovie.value = null
-    }
 
     fun recommendationClick(){
         _viewRecommendations.value = !viewRecommendations.value!!
