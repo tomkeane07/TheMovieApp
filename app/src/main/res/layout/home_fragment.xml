@@ -35,16 +35,15 @@
             android:gravity="center_horizontal"
             android:inputType="textPersonName"
             android:hint="@string/search_movie_by_name_hint"
-            app:layout_constraintEnd_toStartOf="@id/search_by_name_button"
+            app:layout_constraintEnd_toStartOf="@id/search_by_name_clear_button"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/look_up_movies_button" />
 
         <ImageButton
-            android:id="@+id/search_by_name_button"
+            android:id="@+id/search_by_name_clear_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="?android:attr/actionModeWebSearchDrawable"
-            android:onClick="@{() -> viewModel.searchByNameClicked()}"
+            android:src="@android:drawable/btn_dialog"
             app:layout_constraintBottom_toBottomOf="@id/search_by_name_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/search_by_name_text" />

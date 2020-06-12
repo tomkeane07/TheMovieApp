@@ -39,10 +39,6 @@ class HomeViewModel(
     val status: LiveData<MovieApiStatus>
         get() = _status
 
-    private val _searchByName = MutableLiveData<Boolean>(false)
-    val searchByName: LiveData<Boolean>
-        get() = _searchByName
-
     fun searchByName(name: String) = coroutineScope.launch {
         try {
             _status.value = MovieApiStatus.LOADING
@@ -53,10 +49,6 @@ class HomeViewModel(
         } catch (networkError: IOException) {
             _status.value = MovieApiStatus.ERROR
         }
-    }
-
-    fun searchByNameClicked(){
-        _searchByName.value = !searchByName.value!!
     }
 
 }

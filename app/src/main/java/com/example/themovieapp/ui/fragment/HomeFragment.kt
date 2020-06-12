@@ -68,11 +68,7 @@ class HomeFragment : Fragment() {
             }
         )
 
-        viewModel.searchByName.observe(viewLifecycleOwner,
-            Observer<Boolean> {
-                if (search_by_name_text.text.toString().length > 0)
-                    viewModel.searchByName(search_by_name_text.text.toString())
-            })
+
 
         return binding.root
     }
@@ -85,8 +81,17 @@ class HomeFragment : Fragment() {
             override fun afterTextChanged(s: Editable) {}
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                if (search_by_name_text.text.toString().length > 0)
+                if (search_by_name_text.text.toString().length > 0) {
                     viewModel.searchByName(search_by_name_text.text.toString())
+                } else{
+                    viewModel._movieList.value = listOf()
+                }
+            }
+        })
+
+        search_by_name_clear_button.setOnClickListener(object:View.OnClickListener {
+            override fun onClick(v:View) {
+                search_by_name_text.text.clear()
             }
         })
     }
