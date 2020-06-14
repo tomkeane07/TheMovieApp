@@ -46,7 +46,7 @@ class MovieListViewModel(
         getMovies()
     }
 
-    private fun getMovies() = coroutineScope.launch {
+    fun getMovies() = coroutineScope.launch {
         refreshDataFromRepository(pageCount)
     }
 

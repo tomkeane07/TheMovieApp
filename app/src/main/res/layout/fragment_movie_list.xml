@@ -31,20 +31,34 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:listData="@{viewModel.movieList}"
-            tools:listitem="@layout/movie_list_item" />
+            tools:listitem="@layout/movie_list_item"
+            tools:visibility="gone" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/movie_list_empty_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="188dp"
+            android:src="@drawable/refresh_icon_small"
+            android:onClick="@{() -> viewModel.getMovies()}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:showOnlyWhenEmpty="@{viewModel.movieList}"/>
 
         <TextView
+            android:id="@+id/movie_list_empty_text"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:gravity="center"
+            android:gravity="center_horizontal|top"
             android:text="@string/waiting_for_location_and_network"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:showOnlyWhenEmpty="@{viewModel.movieList}"
-            tools:visibility="gone" />
+            app:layout_constraintTop_toBottomOf="@+id/movie_list_empty_button"
+            app:showOnlyWhenEmpty="@{viewModel.movieList}" />
 
         <Button
             android:id="@+id/load_more_button"

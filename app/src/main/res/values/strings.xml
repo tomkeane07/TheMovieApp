@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">The Movie App</string>
     <string name="seeMoviesButton">look up top movies</string>
-    <string name="waiting_for_location_and_network">Waiting for location and network result.\n\n If running on an         emulator open the Maps app to enable location services.</string>
+    <string name="waiting_for_location_and_network">Waiting for location and network result.\n\n If running on an         emulator, it may be necessary to restart the app.</string>
     <string name="load_more_movies">Load more movies</string>
     <string name="clear_movie_list">clear movie list</string>
     <string name="to_about_page">about us</string>
