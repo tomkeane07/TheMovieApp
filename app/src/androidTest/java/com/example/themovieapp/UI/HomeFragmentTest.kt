@@ -3,14 +3,20 @@ package com.example.themovieapp.UI
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
+import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.testing.TestNavHostController
+import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
-import androidx.test.espresso.matcher.ViewMatchers
-import androidx.test.espresso.matcher.ViewMatchers.assertThat
+import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.contrib.DrawerActions.open
+import androidx.test.espresso.contrib.NavigationViewActions
+import androidx.test.espresso.contrib.RecyclerViewActions
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.rule.ActivityTestRule
 import com.example.themovieapp.R
 import com.example.themovieapp.ui.fragment.HomeFragment
 import com.example.themovieapp.ui.view.HomeViewModel
@@ -23,6 +29,9 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import com.example.themovieapp.androidTestUtils.*
+import com.example.themovieapp.ui.activity.MainActivity
+import java.lang.Thread.sleep
 
 @ExperimentalCoroutinesApi
 @RunWith(AndroidJUnit4::class)
@@ -30,8 +39,10 @@ class HomeFragmentTest {
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()
 
+
     lateinit var homeViewModel: HomeViewModel
     lateinit var scenario: FragmentScenario<HomeFragment>
+    lateinit var navController: NavController
 
     private val testDispatcher = TestCoroutineDispatcher()
     private val testScope: ManagedCoroutineScope =
@@ -46,7 +57,7 @@ class HomeFragmentTest {
     //Test nav via UI
     @Test
     fun testLookUpMoviesButton() {
-        val navController = TestNavHostController(
+        navController = TestNavHostController(
             ApplicationProvider.getApplicationContext()
         )
         navController.setGraph(R.navigation.nav_graph)
@@ -58,8 +69,68 @@ class HomeFragmentTest {
 
 
         // simulate Btn click
-        onView(ViewMatchers.withId(R.id.look_up_movies_button)).perform(ViewActions.click())
+        onView(withId(R.id.look_up_movies_button)).perform(ViewActions.click())
         // Verify that performing a click prompts the correct Navigation action
         assertThat(navController.currentDestination?.id, equalTo(R.id.movieSearch))
+    }
+
+    @Test
+    fun testSearchByName_Text_ClearButton() {
+        onView(withId(R.id.search_by_name_text))
+            .perform(ViewActions.typeText("dog day afternoon"))
+            .check(matches(withText("dog day afternoon")))
+
+        onView(withId(R.id.search_by_name_clear_button))
+            .perform(ViewActions.click())
+
+        onView(withId(R.id.search_by_name_text))
+            .check(matches(withText("")))
+
+    }
+
+    @Test
+    fun testSearchByName_Text_List_Nav() {
+        Navsetup()
+
+        onView(withId(R.id.search_by_name_text))
+            .perform(ViewActions.typeText("dog day afternoon"))
+            .check(matches(withText("dog day afternoon")))
+
+        sleep(500)
+        onView(withId(R.id.search_by_name_movie_list))
+            .check(matches(CustomRecyclerViewTestUtil.itemCountGreaterThan(0)))
+
+        onView(withId(R.id.search_by_name_movie_list))
+            .perform(
+                RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                    0, ViewActions.click()
+                )
+            )
+
+        assertThat(navController.currentDestination?.id, equalTo(R.id.movieDetailFragment))
+    }
+
+    @Test
+    fun testDrawerLayout() {
+
+//        onView(withId(R.id.drawer_layout)).perform(open())
+
+/*        onView(withId(R.id.navigation_view)).perform(open())
+
+        onView(withId(R.id.navigation_view)).perform(NavigationViewActions.navigateTo(R.id.action_homeFragment_to_aboutAppFragment))
+        assertThat(navController.currentDestination?.id, equalTo(R.id.about_App))*/
+    }
+
+
+    fun Navsetup() {
+        navController = TestNavHostController(
+            ApplicationProvider.getApplicationContext()
+        )
+        navController.setGraph(R.navigation.nav_graph)
+
+        // Set the NavController property on the fragment
+        scenario.onFragment { fragment ->
+            Navigation.setViewNavController(fragment.requireView(), navController)
+        }
     }
 }

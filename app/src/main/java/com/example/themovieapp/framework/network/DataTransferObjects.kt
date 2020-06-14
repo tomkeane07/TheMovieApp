@@ -22,9 +22,9 @@ data class NetworkMovie(
     val title: String,
     val vote_average: Double,
     val poster_path: String?,
-    val overview: String,
+    val overview: String = "",
     val adult: Boolean,
-    val release_date: String
+    val release_date: String = ""
 )
 
 /**

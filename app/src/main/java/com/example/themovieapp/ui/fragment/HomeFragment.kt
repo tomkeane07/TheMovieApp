@@ -78,15 +78,15 @@ class HomeFragment : Fragment() {
 
 
         search_by_name_text.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable) {}
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+            override fun afterTextChanged(s: Editable) {
                 if (search_by_name_text.text.toString().length > 0) {
                     viewModel.searchByName(search_by_name_text.text.toString())
                 } else{
                     viewModel._movieList.value = listOf()
                 }
             }
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
         })
 
         search_by_name_clear_button.setOnClickListener(object:View.OnClickListener {

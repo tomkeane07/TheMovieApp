@@ -112,7 +112,7 @@ fun bindStatus(
 @BindingAdapter("showOnlyWhenEmpty")
 fun View.showOnlyWhenEmpty(data: List<Movie>?) {
     visibility = when {
-        data == null -> View.VISIBLE
+        data == null || data.isEmpty() -> View.VISIBLE
         else -> View.GONE
     }
 }
