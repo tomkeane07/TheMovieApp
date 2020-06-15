@@ -92,6 +92,7 @@ class HomeFragment : Fragment() {
         search_by_name_clear_button.setOnClickListener(object:View.OnClickListener {
             override fun onClick(v:View) {
                 search_by_name_text.text.clear()
+                viewModel._movieList.value = listOf()
             }
         })
     }
