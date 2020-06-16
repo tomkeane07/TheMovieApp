@@ -1,5 +1,7 @@
 package com.example.themovieapp.UI
 
+import android.content.Context
+import android.net.wifi.WifiManager
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
@@ -10,14 +12,13 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.contrib.DrawerActions.open
-import androidx.test.espresso.contrib.NavigationViewActions
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.rule.ActivityTestRule
 import com.example.themovieapp.R
+import com.example.themovieapp.androidTestUtils.CustomRecyclerViewTestUtil
 import com.example.themovieapp.ui.fragment.HomeFragment
 import com.example.themovieapp.ui.view.HomeViewModel
 import com.example.themovieapp.utils.ManagedCoroutineScope
@@ -29,9 +30,8 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import com.example.themovieapp.androidTestUtils.*
-import com.example.themovieapp.ui.activity.MainActivity
 import java.lang.Thread.sleep
+
 
 @ExperimentalCoroutinesApi
 @RunWith(AndroidJUnit4::class)
@@ -85,7 +85,6 @@ class HomeFragmentTest {
 
         onView(withId(R.id.search_by_name_text))
             .check(matches(withText("")))
-
     }
 
     @Test
@@ -108,17 +107,6 @@ class HomeFragmentTest {
             )
 
         assertThat(navController.currentDestination?.id, equalTo(R.id.movieDetailFragment))
-    }
-
-    @Test
-    fun testDrawerLayout() {
-
-//        onView(withId(R.id.drawer_layout)).perform(open())
-
-/*        onView(withId(R.id.navigation_view)).perform(open())
-
-        onView(withId(R.id.navigation_view)).perform(NavigationViewActions.navigateTo(R.id.action_homeFragment_to_aboutAppFragment))
-        assertThat(navController.currentDestination?.id, equalTo(R.id.about_App))*/
     }
 
 

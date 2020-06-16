@@ -26,13 +26,14 @@ class MovieListFragment : Fragment() {
 
     //using this var for fragmentTesting purposes
     lateinit var selectedMovie: Movie
+    lateinit var viewModel: MovieListViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val application = requireNotNull(activity).application
-        val viewModel = ViewModelProviders.of(
+        viewModel = ViewModelProviders.of(
             this,
             MovieListViewModelFactory(
                 LifecycleManagedCoroutineScope(

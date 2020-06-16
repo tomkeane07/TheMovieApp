@@ -6,9 +6,8 @@ import com.example.themovieapp.framework.db.MoviesDatabase
 
 object DatabaseTestUtils {
     fun getTestDb() =
-        Room.databaseBuilder(
+        Room.inMemoryDatabaseBuilder(
             ApplicationProvider.getApplicationContext(),
-            MoviesDatabase::class.java,
-            MoviesDatabase.DATABASE_NAME
+            MoviesDatabase::class.java
         ).build()
 }

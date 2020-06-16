@@ -31,7 +31,7 @@ class CustomRecyclerViewTestUtil {
         fun itemCountGreaterThan(count: Int): Matcher<View> {
             return object : BoundedMatcher<View, RecyclerView>(RecyclerView::class.java) {
                 override fun describeTo(description: Description?) {
-                    description?.appendText("RecyclerView with item count: $count")
+                    description?.appendText("RecyclerView with item count greater than: $count")
                 }
 
                 override fun matchesSafely(item: RecyclerView?): Boolean {

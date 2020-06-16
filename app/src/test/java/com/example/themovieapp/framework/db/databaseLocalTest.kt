@@ -6,31 +6,31 @@ import androidx.lifecycle.MutableLiveData
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.themovieapp.testUtils.DatabaseTestUtils
 import com.example.themovieapp.testUtils.SampleMovie
-import com.example.themovieapp.testUtils.getOrAwaitValue
 import com.example.themovieapp.utils.ManagedCoroutineScope
 import com.example.themovieapp.utils.TestScope
-import com.nhaarman.mockitokotlin2.whenever
+import com.nhaarman.mockitokotlin2.doReturn
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher
-import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.Mock
 import org.mockito.Mockito
-import junit.framework.TestCase.assertTrue
+import org.mockito.Mockito.`when`
+import org.mockito.junit.MockitoJUnit
 
 
 @ExperimentalCoroutinesApi
 @RunWith(AndroidJUnit4::class)
 //@Config(manifest = Config.NONE)
-class MoviesDatabaseTest {
+class databaseLocalTest {
     @Rule
     @JvmField
     val instantExecutorRule = InstantTaskExecutorRule()
+
     private lateinit var spyDb: MoviesDatabase
-    private lateinit var movieDao: MovieDao
 
     val movie = SampleMovie.asDatabaseMovie()
     val dbMovies: List<DatabaseMovie> = listOf(movie)
@@ -45,8 +45,7 @@ class MoviesDatabaseTest {
 
     @Before
     fun setup() {
-        spyDb = Mockito.spy(DatabaseTestUtils.getTestDb())
-        movieDao = spyDb.movieDao
+        spyDb = Mockito.mock(DatabaseTestUtils.getTestDb().javaClass)
     }
 
     @Test
@@ -57,26 +56,29 @@ class MoviesDatabaseTest {
 
     //    test passes, but confirms nothing as nothing is really being stored..
 //    should perform in androidTest instead..?
-    @Test
+/*    @Test
     @Throws(Exception::class)
-    fun `get and delete`() = runBlockingTest {
+    fun `get and delete`() {
 
+//    doReturn(movieList).`when`(spyDb.movieDao.getMovies())
 
-        whenever(
+*//*        whenever(
             movieDao.getMovies()
         ).thenReturn(movieList)
-        val list = movieDao.getMovies()
-        assertTrue(
-            "DAO get",
-            list.getOrAwaitValue().first().equals(
-                movie
-            )
-        )
 
-/*        movieDao.insertAll(
-            dbMovies
-        )
-        dbMovies = movieDao.getMovies().getOrAwaitValue()*/
-    }
+        doReturn(movieList).when(movieDao)*//*
+//        val list = movieDao.getMovies()
+//        var result : DatabaseMovie
+//        runBlocking {
+//            result = list.getOrAwaitValue().first()
+//
+//            assertTrue(
+//                "DAO get",
+//                result
+//                    .equals(movie)
+//            )
+//        }
+
+    }*/
 }
 
