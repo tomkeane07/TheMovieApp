@@ -13,14 +13,11 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.NoMatchingViewException
 import androidx.test.espresso.ViewAssertion
 import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.example.themovieapp.R
-import com.example.themovieapp.androidTestUtils.CustomRecyclerViewTestUtil
-import com.example.themovieapp.androidTestUtils.EspressoTestsMatchers.withDrawable
 import com.example.themovieapp.ui.fragment.MovieListFragment
 import com.example.themovieapp.utils.ManagedCoroutineScope
 import com.example.themovieapp.utils.TestScope
@@ -29,7 +26,6 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.runBlockingTest
 import org.hamcrest.CoreMatchers
 import org.hamcrest.CoreMatchers.`is`
 import org.junit.After
@@ -63,7 +59,7 @@ class MovieListFragmentTest {
 
         navController = TestNavHostController(context)
         navController.setGraph(R.navigation.nav_graph)
-        navController.setCurrentDestination(R.id.movieSearch)
+        navController.setCurrentDestination(R.id.movie_search)
 
 
         // Set the NavController property on the fragment
@@ -98,7 +94,7 @@ class MovieListFragmentTest {
 
         assertThat(
             navController.currentDestination?.id,
-            CoreMatchers.equalTo(R.id.movieDetailFragment)
+            CoreMatchers.equalTo(R.id.movie_detail)
         )
     }
 

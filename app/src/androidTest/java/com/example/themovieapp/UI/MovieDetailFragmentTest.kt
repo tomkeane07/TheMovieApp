@@ -143,7 +143,7 @@ class MovieDetailFragmentContentTest {
         //Setup
         navController = TestNavHostController(ApplicationProvider.getApplicationContext())
         navController.setGraph(R.navigation.nav_graph)
-        navController.setCurrentDestination(R.id.movieDetailFragment)
+        navController.setCurrentDestination(R.id.movie_detail)
 
         // Set the NavController property on the fragment
         scenario.onFragment { fragment ->
@@ -163,7 +163,7 @@ class MovieDetailFragmentContentTest {
 
         ViewMatchers.assertThat(
             navController.currentDestination?.id,
-            CoreMatchers.equalTo(R.id.movieDetailFragment)
+            CoreMatchers.equalTo(R.id.movie_detail)
         )
     }
 

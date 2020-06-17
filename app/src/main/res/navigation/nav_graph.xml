@@ -11,34 +11,36 @@
         tools:layout="@layout/home_fragment">
         <action
             android:id="@+id/action_homeFragment_to_movieListFragment"
-            app:destination="@id/movieSearch" />
+            app:destination="@id/movie_search" />
         <action
             android:id="@+id/action_homeFragment_to_aboutAppFragment"
             app:destination="@id/about_App" />
         <action
             android:id="@+id/action_home_to_movieDetailFragment"
-            app:destination="@id/movieDetailFragment" />
+            app:destination="@id/movie_detail" />
     </fragment>
 
     <fragment
         android:id="@+id/about_App"
         android:name="com.example.themovieapp.ui.fragment.AboutFragment"
-        android:label="about us" />
+        android:label="about us"
+        tools:layout="@layout/about_page"/>
 
     <fragment
-        android:id="@+id/movieSearch"
+        android:id="@+id/movie_search"
         android:name="com.example.themovieapp.ui.fragment.MovieListFragment"
-        android:label="Top movies search">
+        android:label="Top movies search"
+        tools:layout="@layout/fragment_movie_list">
         <action
             android:id="@+id/action_movieListFragment_to_MovieDetailFragment"
-            app:destination="@id/movieDetailFragment" />
+            app:destination="@id/movie_detail" />
         <action
             android:id="@+id/action_movieSearch_to_home"
             app:destination="@id/home" />
     </fragment>
 
     <fragment
-        android:id="@+id/movieDetailFragment"
+        android:id="@+id/movie_detail"
         android:name="com.example.themovieapp.ui.fragment.MovieDetailFragment"
         android:label="movie detail"
         tools:layout="@layout/movie_detail_fragment">
@@ -47,7 +49,7 @@
             app:argType="com.example.themovieapp.framework.domain.Movie" />
         <action
             android:id="@+id/action_movieDetailFragment_self"
-            app:destination="@id/movieDetailFragment" />
+            app:destination="@id/movie_detail" />
     </fragment>
 
 </navigation>

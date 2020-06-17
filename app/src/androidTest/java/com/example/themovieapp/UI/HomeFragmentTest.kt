@@ -1,7 +1,5 @@
 package com.example.themovieapp.UI
 
-import android.content.Context
-import android.net.wifi.WifiManager
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
@@ -12,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
-import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
@@ -71,7 +68,7 @@ class HomeFragmentTest {
         // simulate Btn click
         onView(withId(R.id.look_up_movies_button)).perform(ViewActions.click())
         // Verify that performing a click prompts the correct Navigation action
-        assertThat(navController.currentDestination?.id, equalTo(R.id.movieSearch))
+        assertThat(navController.currentDestination?.id, equalTo(R.id.movie_search))
     }
 
     @Test
@@ -89,7 +86,15 @@ class HomeFragmentTest {
 
     @Test
     fun testSearchByName_Text_List_Nav() {
-        Navsetup()
+        navController = TestNavHostController(
+            ApplicationProvider.getApplicationContext()
+        )
+        navController.setGraph(R.navigation.nav_graph)
+
+        // Set the NavController property on the fragment
+        scenario.onFragment { fragment ->
+            Navigation.setViewNavController(fragment.requireView(), navController)
+        }
 
         onView(withId(R.id.search_by_name_text))
             .perform(ViewActions.typeText("dog day afternoon"))
@@ -106,19 +111,6 @@ class HomeFragmentTest {
                 )
             )
 
-        assertThat(navController.currentDestination?.id, equalTo(R.id.movieDetailFragment))
-    }
-
-
-    fun Navsetup() {
-        navController = TestNavHostController(
-            ApplicationProvider.getApplicationContext()
-        )
-        navController.setGraph(R.navigation.nav_graph)
-
-        // Set the NavController property on the fragment
-        scenario.onFragment { fragment ->
-            Navigation.setViewNavController(fragment.requireView(), navController)
-        }
+        assertThat(navController.currentDestination?.id, equalTo(R.id.movie_detail))
     }
 }
