@@ -110,7 +110,7 @@ class HomeFragmentTest {
                     0, ViewActions.click()
                 )
             )
-
+        sleep(100)
         assertThat(navController.currentDestination?.id, equalTo(R.id.movie_detail))
     }
 }

@@ -8,7 +8,6 @@ import com.example.themovieapp.testUtils.DatabaseTestUtils
 import com.example.themovieapp.testUtils.SampleMovie
 import com.example.themovieapp.utils.ManagedCoroutineScope
 import com.example.themovieapp.utils.TestScope
-import com.nhaarman.mockitokotlin2.doReturn
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import org.junit.Assert.assertNotNull
@@ -16,10 +15,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mock
 import org.mockito.Mockito
-import org.mockito.Mockito.`when`
-import org.mockito.junit.MockitoJUnit
 
 
 @ExperimentalCoroutinesApi
@@ -45,7 +41,7 @@ class databaseLocalTest {
 
     @Before
     fun setup() {
-        spyDb = Mockito.mock(DatabaseTestUtils.getTestDb().javaClass)
+        spyDb = Mockito.spy(DatabaseTestUtils.getTestDb().javaClass)
     }
 
     @Test

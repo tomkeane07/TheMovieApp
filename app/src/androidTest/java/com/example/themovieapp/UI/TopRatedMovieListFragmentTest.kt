@@ -91,7 +91,7 @@ class TopRatedMovieListFragmentTest {
                     0, click()
                 )
             )
-
+        sleep(100)
         assertThat(
             navController.currentDestination?.id,
             CoreMatchers.equalTo(R.id.movie_detail)

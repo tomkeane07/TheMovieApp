@@ -77,7 +77,7 @@ class TopRatedMovieListViewModel(
     }
 
     fun clearDB() = coroutineScope.launch {
-        getDatabase(application).movieDao.deleteAll()
+        moviesRepository.deleteAll()
         pageCount = 0
         _dbEmpty.value = true
     }
