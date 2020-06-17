@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="@{() -> clickListener.onClick(movie)}"
-        tools:context="com.example.themovieapp.ui.fragment.MovieListFragment">
+        tools:context="com.example.themovieapp.ui.fragment.TopRatedMovieListFragment">
 
 
         <ImageView

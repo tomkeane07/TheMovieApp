@@ -68,7 +68,7 @@ class HomeFragmentTest {
         // simulate Btn click
         onView(withId(R.id.look_up_movies_button)).perform(ViewActions.click())
         // Verify that performing a click prompts the correct Navigation action
-        assertThat(navController.currentDestination?.id, equalTo(R.id.movie_search))
+        assertThat(navController.currentDestination?.id, equalTo(R.id.top_rated_movie_search))
     }
 
     @Test

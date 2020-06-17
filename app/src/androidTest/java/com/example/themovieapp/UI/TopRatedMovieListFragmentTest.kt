@@ -18,7 +18,7 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.example.themovieapp.R
-import com.example.themovieapp.ui.fragment.MovieListFragment
+import com.example.themovieapp.ui.fragment.TopRatedMovieListFragment
 import com.example.themovieapp.utils.ManagedCoroutineScope
 import com.example.themovieapp.utils.TestScope
 import kotlinx.coroutines.Dispatchers
@@ -37,10 +37,10 @@ import java.lang.Thread.sleep
 @RunWith(AndroidJUnit4::class)
 @ExperimentalCoroutinesApi
 @SmallTest
-class MovieListFragmentTest {
+class TopRatedMovieListFragmentTest {
 
 
-    lateinit var scenario: FragmentScenario<MovieListFragment>
+    lateinit var scenario: FragmentScenario<TopRatedMovieListFragment>
     lateinit var context: Context
     lateinit var navController: TestNavHostController
 
@@ -53,13 +53,13 @@ class MovieListFragmentTest {
 
 
         runBlocking {
-            scenario = launchFragmentInContainer<MovieListFragment>()
+            scenario = launchFragmentInContainer<TopRatedMovieListFragment>()
             context = ApplicationProvider.getApplicationContext()
         }
 
         navController = TestNavHostController(context)
         navController.setGraph(R.navigation.nav_graph)
-        navController.setCurrentDestination(R.id.movie_search)
+        navController.setCurrentDestination(R.id.top_rated_movie_search)
 
 
         // Set the NavController property on the fragment
@@ -120,7 +120,7 @@ class MovieListFragmentTest {
         //Navsetup()
         //ensure db is empty
         scenario.onFragment {
-            it.viewModel.clearDB()
+            it.viewModelTopRated.clearDB()
         }
         //turn off internet
         val wifiManager = context

@@ -14,26 +14,26 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.themovieapp.utils.LifecycleManagedCoroutineScope
 import com.example.themovieapp.R
-import com.example.themovieapp.databinding.FragmentMovieListBinding
+import com.example.themovieapp.databinding.FragmentTopRatedMovieListBinding
 import com.example.themovieapp.framework.domain.Movie
 import com.example.themovieapp.ui.adapters.MovieClickListener
 import com.example.themovieapp.ui.adapters.MovieListAdapter
-import com.example.themovieapp.ui.view.MovieListViewModel
+import com.example.themovieapp.ui.view.TopRatedMovieListViewModel
 import com.example.themovieapp.ui.view.MovieListViewModelFactory
 
 
-class MovieListFragment : Fragment() {
+class TopRatedMovieListFragment : Fragment() {
 
     //using this var for fragmentTesting purposes
     lateinit var selectedMovie: Movie
-    lateinit var viewModel: MovieListViewModel
+    lateinit var viewModelTopRated: TopRatedMovieListViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val application = requireNotNull(activity).application
-        viewModel = ViewModelProviders.of(
+        viewModelTopRated = ViewModelProviders.of(
             this,
             MovieListViewModelFactory(
                 LifecycleManagedCoroutineScope(
@@ -42,19 +42,19 @@ class MovieListFragment : Fragment() {
                 ),
                 application
             )
-        ).get(MovieListViewModel::class.java)
+        ).get(TopRatedMovieListViewModel::class.java)
 
-        val binding = FragmentMovieListBinding.inflate(inflater)
+        val binding = FragmentTopRatedMovieListBinding.inflate(inflater)
 
         //val binding = GridViewItemBinding.inflate(inflater)
         // Allows Data Binding to Observe LiveData with the lifecycle of this Fragment
         binding.lifecycleOwner = this
 
-        // Giving the binding access to the MovieListViewModel
-        binding.viewModel = viewModel
+        // Giving the binding access to the TopRatedMovieListViewModel
+        binding.viewModel = viewModelTopRated
 
         // Sets the adapter of the RecyclerView with clickHandler lambda that
-        // tells the viewModel when our movie is clicked
+        // tells the viewModelTopRated when our movie is clicked
         binding.movieList.adapter =
             MovieListAdapter(
                 MovieClickListener { clickedMovie ->
@@ -67,12 +67,12 @@ class MovieListFragment : Fragment() {
 
 
         //Observes change in LiveData, then performs navigation
-        viewModel.dbEmpty.observe(viewLifecycleOwner,
+        viewModelTopRated.dbEmpty.observe(viewLifecycleOwner,
             Observer<Boolean> { navigate ->
                 if (navigate) {
                     val navController = findNavController()
                     navController.navigate(R.id.action_movieSearch_to_home)
-                    viewModel.dbCleared()
+                    viewModelTopRated.dbCleared()
                 }
             }
         )
@@ -84,7 +84,7 @@ class MovieListFragment : Fragment() {
                     super.onLayoutCompleted(state)
                     findLastVisibleItemPosition()
                     val count = (binding.movieList.adapter as MovieListAdapter).itemCount
-                    if (!viewModel.atStart) {
+                    if (!viewModelTopRated.atStart) {
                         //speed the scroll up a bit, but still looks nice
                         binding.movieList.scrollToPosition(count - 5)
                         binding.movieList.smoothScrollToPosition(count)

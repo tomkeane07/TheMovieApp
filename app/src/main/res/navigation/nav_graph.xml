@@ -10,8 +10,8 @@
         android:label="Home"
         tools:layout="@layout/home_fragment">
         <action
-            android:id="@+id/action_homeFragment_to_movieListFragment"
-            app:destination="@id/movie_search" />
+            android:id="@+id/action_homeFragment_to_topRatedMovieListFragment"
+            app:destination="@id/top_rated_movie_search" />
         <action
             android:id="@+id/action_homeFragment_to_aboutAppFragment"
             app:destination="@id/about_App" />
@@ -27,10 +27,10 @@
         tools:layout="@layout/about_page"/>
 
     <fragment
-        android:id="@+id/movie_search"
-        android:name="com.example.themovieapp.ui.fragment.MovieListFragment"
+        android:id="@+id/top_rated_movie_search"
+        android:name="com.example.themovieapp.ui.fragment.TopRatedMovieListFragment"
         android:label="Top movies search"
-        tools:layout="@layout/fragment_movie_list">
+        tools:layout="@layout/fragment_top_rated_movie_list">
         <action
             android:id="@+id/action_movieListFragment_to_MovieDetailFragment"
             app:destination="@id/movie_detail" />

@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.themovieapp.framework.db.getDatabase
-import com.example.themovieapp.framework.domain.Movie
 import com.example.themovieapp.framework.repository.MoviesRepository
 import com.example.themovieapp.utils.ManagedCoroutineScope
 import kotlinx.coroutines.cancel
@@ -14,7 +13,7 @@ import java.io.IOException
 
 enum class MovieApiStatus { LOADING, ERROR, DONE }
 
-class MovieListViewModel(
+class TopRatedMovieListViewModel(
     val coroutineScope: ManagedCoroutineScope,
     val application: Application
 ) : ViewModel() {
@@ -102,8 +101,8 @@ class MovieListViewModelFactory(
     @Suppress("unchecked_cast")
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(MovieListViewModel::class.java)) {
-            return MovieListViewModel(
+        if (modelClass.isAssignableFrom(TopRatedMovieListViewModel::class.java)) {
+            return TopRatedMovieListViewModel(
                 managedCoroutineScope,
                 application
             ) as T

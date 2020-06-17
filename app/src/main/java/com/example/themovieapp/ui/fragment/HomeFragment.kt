@@ -62,7 +62,7 @@ class HomeFragment : Fragment() {
             Observer<Boolean> { navigate ->
                 if (navigate) {
                     val navController = findNavController()
-                    navController.navigate(R.id.action_homeFragment_to_movieListFragment)
+                    navController.navigate(R.id.action_homeFragment_to_topRatedMovieListFragment)
                     viewModel.onNavigatedToSearch()
                 }
             }
